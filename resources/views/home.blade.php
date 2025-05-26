@@ -13,11 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ __('You are logged in!') }}
+                     <a href="{{route('tareas.index')}}">tarea</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
