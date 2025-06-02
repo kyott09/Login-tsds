@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     {{ __('You are logged in!') }}
-                     <a href="{{route('tareas.index')}}">tarea</a>
+                     <a href="{{route('tareas.index')}}" class="btn btn-primary">Ir a Tareas</a>
                 </div>
             </div>
         </div>
