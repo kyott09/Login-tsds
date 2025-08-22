@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TareaSeeder::class); 
         $this->call(CountrySeeder::class);
         $this->call(ProvinceSeeder::class);
-    }
+        $this->call(BrandSeeder::class);
+        $this->call(VehicleModelSeeder::class);
+        $this->call(VehicleSeeder::class);    }
 }
