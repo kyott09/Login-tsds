@@ -16,4 +16,13 @@ class Vehicle extends Model
         'descripcion',
         'estado',
     ];
+
+    public function modelo()
+    {
+        return $this->belongsTo(VehicleModel::class);
+    }
+
+    
 }
+
+

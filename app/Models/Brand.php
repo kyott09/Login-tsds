@@ -11,4 +11,11 @@ class Brand extends Model
     protected $fillable = [
         'descripcion',
     ];
+
+    public function modelos()
+    {
+        return $this->hasMany(Modelo::class);
+    }
 }
+
+

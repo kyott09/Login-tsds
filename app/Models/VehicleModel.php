@@ -12,4 +12,9 @@ class VehicleModel extends Model
         'descripcion',
         'brand_id',
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }
