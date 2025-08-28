@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('vehicle_models', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
-            $table->foreignID('brand_id')
+            $table->string('descripcion',50);
+            $table->foreignID('brand_id',50)
                 ->constrained('brands')
                 ->onDelete('restrict');
             $table->timestamps();

@@ -33,3 +33,5 @@ Route::get('/tareas/{tarea}/edit',[App\Http\Controllers\TareaController::class, 
 Route::put('/tareas/{tarea}',[App\Http\Controllers\TareaController::class, 'update'])->name('tareas.update');
 
 Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])->name('tareas.destroy');
+
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
