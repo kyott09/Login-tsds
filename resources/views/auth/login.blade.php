@@ -69,18 +69,16 @@
         </div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
-        <p>- O -</p>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Inicia utilizando Google+
-        </a>
+      <div class="mt-4 d-flex justify-content-center">
+        <div>
+          @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="mx-2">Olvidé Mi Contraseña</a>
+          @endif
+          @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="mx-2">Registrarse</a>
+          @endif
+        </div>
       </div>
-
-      <p class="mb-1">
-        @if (Route::has('password.request'))
-          <a href="{{ route('password.request') }}">Olvidé Mi Contraseña</a>
-        @endif
-      </p>
     </div>
   </div>
 </div>

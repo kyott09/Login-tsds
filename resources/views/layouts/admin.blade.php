@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Plugin | Dashboard</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -41,9 +41,12 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+      <!-- Eliminar el botón Home del navbar -->
+      <!--
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('home')}}" class="nav-link">Home</a>
       </li>
+      -->
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
@@ -52,24 +55,26 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
+      <li class="nav-item d-flex align-items-center">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+        <!-- Miniatura de usuario -->
+        <div class="dropdown">
+          <a href="#" class="nav-link p-0 ml-2" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;">
+            <img src="dist/img/yoryi.png" class="img-circle elevation-2" alt="User Image" style="width:32px; height:32px; object-fit:cover;">
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <span class="dropdown-item-text">Matias Georgieff</span>
+            <div class="dropdown-divider"></div>
+            <a href="{{ route('logout') }}" class="dropdown-item"
+               onclick="event.preventDefault(); document.getElementById('logout-form-navbar').submit();">
+              <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+            </a>
+            <form id="logout-form-navbar" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+          </div>
         </div>
       </li>
 
@@ -175,9 +180,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="{{ route('home') }}" class="brand-link">
+      <img src="dist/img/LOGOSOLO.png" alt="Plugin Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Plugin</span>
     </a>
 
     <!-- Sidebar -->
