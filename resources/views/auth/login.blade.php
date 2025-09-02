@@ -70,10 +70,7 @@
       </form>
 
       <div class="social-auth-links text-center mb-3">
-        <p>- O -</p>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Inicia utilizando Google+
-        </a>
+
       </div>
 
       <p class="mb-1">
