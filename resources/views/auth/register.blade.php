@@ -14,16 +14,26 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 </head>
+<<<<<<< HEAD
 <body class="hold-transition register-page">
+=======
+<body class="hold-transition login-page">
+>>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
 <div class="login-box">
   <div class="login-logo">
     <div style="display: flex; justify-content: center; align-items: center;">
       <img src="{{ asset('dist/img/plugin logo.png') }}" 
            alt="Logo"
+<<<<<<< HEAD
            style="opacity: .9; width: 260px; height: 220px; margin-bottom: -80px; margin-top: -70px;">
     </div>
   </div>
 
+=======
+           style="opacity: .9; width: 260px; height: 220px; margin-bottom: -60px; margin-top: -80px;">
+    </div>
+  </div>
+>>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Registrar Usuario</p>
@@ -79,28 +89,17 @@
             <div class="input-group-text"><span class="fas fa-lock"></span></div>
           </div>
         </div>
-
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" required>
-              <label for="agreeTerms">
-                Acepto los <a href="#">términos</a>
-              </label>
-            </div>
-          </div>
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+          <!-- Eliminar el checkbox de términos y centrar el botón -->
+          <div class="col-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-block w-50">Registrar</button>
           </div>
         </div>
       </form>
-
-      <div class="social-auth-links text-center mb-3">
-
-
+      <div class="d-flex justify-content-center mt-3">
+        <a href="{{ route('login') }}" class="text-center">Ya tengo una cuenta</a>
       </div>
-
-      <a href="{{ route('login') }}" class="text-center">Ya tengo una cuenta</a>
+>>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
     </div>
   </div>
 </div>
@@ -113,3 +112,14 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>
 </html>
+<<<<<<< HEAD
+=======
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+</body>
+</html>
+>>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
