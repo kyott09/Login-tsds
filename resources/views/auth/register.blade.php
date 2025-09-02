@@ -14,11 +14,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 </head>
-<<<<<<< HEAD
 <body class="hold-transition register-page">
-=======
 <body class="hold-transition login-page">
->>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
 <div class="login-box">
   <div class="login-logo">
     <div style="display: flex; justify-content: center; align-items: center;">
@@ -29,11 +26,9 @@
     </div>
   </div>
 
-=======
-           style="opacity: .9; width: 260px; height: 220px; margin-bottom: -60px; margin-top: -80px;">
     </div>
   </div>
->>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
+
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Registrar Usuario</p>
@@ -99,7 +94,6 @@
       <div class="d-flex justify-content-center mt-3">
         <a href="{{ route('login') }}" class="text-center">Ya tengo una cuenta</a>
       </div>
->>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
     </div>
   </div>
 </div>
@@ -112,8 +106,7 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>
 </html>
-<<<<<<< HEAD
-=======
+
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -122,4 +115,3 @@
 <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>
 </html>
->>>>>>> 9bf211c50fbdf84184e3674a75ba130fd72be66f
