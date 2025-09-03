@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -37,3 +38,9 @@ Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, '
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::get('/password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+
+});
+
+Route::get('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController::class, 'showLoginForm'])->name('logincustomer');
+
+Route::post('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController::class, 'login'])->name('logincustomer.submit');

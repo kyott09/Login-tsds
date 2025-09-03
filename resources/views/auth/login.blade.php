@@ -53,13 +53,13 @@
 
         <form method="POST" action="{{ route('login') }}">
           @csrf
-          <div class="input-group mb-3">
-            <input id="email" type="email" 
-                   class="form-control @error('email') is-invalid @enderror" 
-                   name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                   placeholder="Email">
+            <div class="input-group mb-3">
+            <input id="user" type="text" 
+                 class="form-control @error('user') is-invalid @enderror" 
+                 name="user" value="{{ old('user') }}" required autocomplete="username" autofocus
+                 placeholder="Usuario">
             <div class="input-group-append">
-              <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+              <div class="input-group-text"><span class="fas fa-user"></span></div>
             </div>
             @error('email')
               <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>

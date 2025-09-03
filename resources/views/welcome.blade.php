@@ -19,33 +19,37 @@
 </head>
 <body class="login-page">
     <div class="center">
-        <img src="{{ asset('dist/img/plugin logo.png') }}" alt="Logo de Plugin SRL" class="logo">
+        <img src="{{ asset('dist/img/LOGOGRANDE.png') }}" alt="Plugin SRL company logo featuring stylized text Plugin SRL in bold modern font, set against a clean background that conveys professionalism and innovation, with a welcoming and optimistic tone" class="logo" style="height:185px;">
         <div class="card" style="max-width:1500px; width:100%; margin-bottom:32px;">
             <div class="card-body">
                 <h3 class="text-center mb-3 font-weight-bold">Bienvenidos a Plugin</h3>
                 <p class="text-center mb-2" style="font-size:1.1rem;">Conectando el futuro, optimizando el presente</p>
-                <p style="text-align:justify;">
-                    En Plugin ofrecemos servicios de internet por cable para hogares y empresas, con un compromiso firme hacia la eficiencia, la calidad y la innovación. Nuestra empresa está dando un paso adelante en la transformación digital: dejamos atrás la gestión en papel para implementar un sistema inteligente e integral que mejora cada etapa de nuestro trabajo.
-                </p>
-                <p style="text-align:justify;">
-                    Ahora, cada pedido se gestiona online, desde que lo solicitás hasta que se completa. Planificamos tareas según las habilidades de nuestros técnicos, organizamos equipos dinámicos de trabajo, controlamos en tiempo real el stock de materiales y el estado de nuestros vehículos. Todo esto, centralizado en una plataforma que nos permite actuar rápido, con precisión y trazabilidad.
-                </p>
-                <p style="text-align:justify;">
-                    Nuestro nuevo sistema nos permite ofrecer un servicio más ágil, seguro y transparente, con reportes detallados, comunicación interna efectiva y atención prioritaria para clientes críticos. Así, cada decisión se basa en datos, cada acción es más eficiente, y cada cliente recibe un mejor servicio.
-                </p>
-                <p style="text-align:justify;">
-                    Plugin evoluciona para brindarte una experiencia de conectividad más confiable, organizada y profesional.
-                </p>
             </div>
         </div>
+        <div style="display:flex; gap:24px; justify-content:center; margin-bottom:32px;">
+            <a href="{{ route('login') }}" class="btn btn-warning btn-lg">
+                <button class="btn btn-warning btn-lg">
+                <i class="fas fa-user-tie">
+            <span style="font-family: 'Courier New', monospace;">Sección Empleados</span>
+            </i>
+                </button>
+            </a>
+              <a href="{{ route('logincustomer') }}" class="btn btn-primary btn-lg">
+    <button class="btn btn-primary btn-lg">
+        <i class="fas fa-user">
+            <span style="font-family: 'Courier New', monospace;">Sección Clientes</span>
+        </i>
+    </button>
+</a>
+
+            </div>
         @if (Route::has('login'))
             <div class="links">
                 @auth
                     <a href="{{ url('/home') }}">Home</a>
                 @else
-                    <a href="{{ route('login') }}">Iniciar Sesión</a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}">Registrar</a>
+                        {{-- <a href="{{ route('register') }}">Registrar</a> --}}
                     @endif
                 @endauth
             </div>
@@ -56,4 +60,5 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>
+</html>
 </html>
