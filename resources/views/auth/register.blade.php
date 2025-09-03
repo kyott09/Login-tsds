@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Plug1n | Registro</title>
 
+    <!-- Estilos personalizados para posicionar y achicar el logo -->
+  <style>
+    .top-left-logo {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+    }
+    /* Logo reducido a 40px de ancho */
+    .top-left-logo img {
+      display: block;
+      opacity: .9;
+      width: 40px;
+      height: auto;
+    }
+  </style>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -28,7 +44,10 @@
 
     </div>
   </div>
-
+  <!-- Logo clickeable hacia home, ahora más chico -->
+  <a href="{{ url('/') }}" class="top-left-logo">
+    <img src="{{ asset('dist/img/flecha.png') }}" alt="Logo Home">
+  </a>
   <div class="card">
     <div class="card-body register-card-body">
       <p class="login-box-msg">Registrar Usuario</p>

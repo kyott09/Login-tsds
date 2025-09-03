@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <style>
         .center { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; }
-        .logo { height:320px; max-width:90vw; display:block; margin-bottom:10px; }
+        .logo { height:220px; max-width:90vw; display:block; margin-bottom:10px; }
         .links { margin-top:54px; display:flex; gap:32px; }
         a { font-size:1.25rem; color:#fff; text-decoration:underline; }
         .links a { color:#000 !important; }
