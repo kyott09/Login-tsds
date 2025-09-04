@@ -105,16 +105,6 @@
       </div>
     </div>
   </div>
-      <div class="social-auth-links text-center mb-3">
-
-      </div>
-
-      <p class="mb-1">
-        @if (Route::has('password.request'))
-          <a href="{{ route('password.request') }}">Olvidé Mi Contraseña</a>
-        @endif
-      </p>
-    </div>
   </div>
 </div>
 
