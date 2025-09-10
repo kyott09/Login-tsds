@@ -48,3 +48,4 @@ Route::post('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController
 // Rutas para Registro de Clientes
 Route::get('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'showRegistrationForm'])->name('registercustomer');
 Route::post('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'register'])->name('registercustomer.submit');
+Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
