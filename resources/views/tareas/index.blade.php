@@ -15,11 +15,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="table">
+                    <table class="table" id="myTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Acciones</th> 
                             </tr>
                         </thead>
                         <tbody>
@@ -29,18 +30,19 @@
                                     <td>{{ $tarea->nombre }}</td>
                                     <td>
                                         <a href="{{ route('tareas.edit', $tarea->id)}}" class="btn btn-warning btn-sm">Editar</a>
-                                            <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm ('¿Estas seguro de eliminar esta tarea?')">
-                                                    Eliminar
-                                                </button>
-                                            </form>
+                                        <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estas seguro de eliminar esta tarea?')">
+                                                Eliminar
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -48,3 +50,11 @@
 </div>
 @endsection
 
+@push('scripts')
+<script>    
+$(document).ready(function () {
+    $('#myTable').DataTable({
+    });
+});
+</script>
+@endpush
