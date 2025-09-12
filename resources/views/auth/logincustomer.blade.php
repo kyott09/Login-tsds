@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="{{ asset('dist/img/FAVICON.png') }}" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Plugin SRL | Cliente</title>
  <!-- Estilos personalizados para posicionar y achicar el logo -->

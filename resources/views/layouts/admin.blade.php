@@ -229,7 +229,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link">
+                <a href="{{ route('vehiculos.index')}}" class="nav-link">
               <i class="nav-icon fas fa-car"></i>
                   <p>Vehiculo</p>
                 </a>

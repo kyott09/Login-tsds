@@ -3,85 +3,83 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreVehicleRequest;
-use App\Http\Requests\UpdateVehicleRequest;
+use App\Models\VehicleModel;
+use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the vehicles.
      */
     public function index()
     {
-        //
+        $vehiculos = Vehicle::with('modelo')->get(); // Traemos también el modelo
+        return view('vehiculos.index', compact('vehiculos'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new vehicle.
      */
     public function create()
     {
-        //
+        $modelos = VehicleModel::all(); // Para el dropdown de modelos
+        return view('vehiculos.create', compact('modelos'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreVehicleRequest  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created vehicle in storage.
      */
-    public function store(StoreVehicleRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'patente' => 'required|unique:vehicles,patente',
+            'modelo_id' => 'required|exists:vehicle_models,id',
+            'color' => 'nullable|string|max:50',
+            'descripcion' => 'nullable|string|max:255',
+            'estado' => 'required|in:activo,inactivo',
+        ]);
+
+        Vehicle::create($request->all());
+
+        return redirect()->route('vehiculos.index')
+            ->with('success', 'Vehículo registrado exitosamente');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * Show the form for editing the specified vehicle.
      */
-    public function show(Vehicle $vehicle)
+    public function edit(Vehicle $vehiculo)
     {
-        //
+        $modelos = VehicleModel::all();
+        return view('vehiculos.edit', compact('vehiculo', 'modelos'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * Update the specified vehicle in storage.
      */
-    public function edit(Vehicle $vehicle)
+    public function update(Request $request, Vehicle $vehiculo)
     {
-        //
+        $request->validate([
+            'patente' => 'required|unique:vehicles,patente,' . $vehiculo->id,
+            'modelo_id' => 'required|exists:vehicle_models,id',
+            'color' => 'nullable|string|max:50',
+            'descripcion' => 'nullable|string|max:255',
+            'estado' => 'required|in:activo,inactivo',
+        ]);
+
+        $vehiculo->update($request->all());
+
+        return redirect()->route('vehiculos.index')
+            ->with('success', 'Vehículo actualizado exitosamente');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateVehicleRequest  $request
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
+     * Remove the specified vehicle from storage.
      */
-    public function update(UpdateVehicleRequest $request, Vehicle $vehicle)
+    public function destroy(Vehicle $vehiculo)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Vehicle $vehicle)
-    {
-        //
+        $vehiculo->delete();
+        return redirect()->route('vehiculos.index')
+            ->with('success', 'Vehículo eliminado exitosamente');
     }
 }

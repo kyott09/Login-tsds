@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{{ asset('dist/img/FAVICON.png') }}" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plugin SRL</title>
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">

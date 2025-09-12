@@ -49,3 +49,13 @@ Route::post('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController
 Route::get('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'showRegistrationForm'])->name('registercustomer');
 Route::post('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'register'])->name('registercustomer.submit');
 Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
+
+Route::get('/vehiculos', [VehicleController::class, 'index'])->name('vehiculos.index');
+Route::get('/vehiculos/create', [VehicleController::class, 'create'])->name('vehiculos.create');
+Route::post('/vehiculos', [VehicleController::class, 'store'])->name('vehiculos.store');
+
+Route::get('/vehiculos/{vehiculo}/edit', [VehicleController::class, 'edit'])->name('vehiculos.edit');
+
+Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name('vehiculos.update');
+
+Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy');
