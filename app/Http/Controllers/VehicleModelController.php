@@ -3,75 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\VehicleModel;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class VehicleModelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $modelos = VehicleModel::all();
-        return view('vehicle_models.index', compact('modelos'));
+        $models = VehicleModel::with('brand')->get();
+        return view('vehicle_model.index', compact('models'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-// Para crear vehículo
     public function create()
     {
-        $modelos = VehicleModel::all();
-        return view('vehiculos.create', compact('modelos'));
+        $brands = Brand::all();
+        return view('vehicle_model.create', compact('brands'));
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100|unique:vehicle_models,nombre',
+            'descripcion' => 'required|string|max:100|unique:vehicle_models,descripcion',
+            'brand_id' => 'required|exists:brands,id',
         ]);
 
         VehicleModel::create($request->all());
 
-        return redirect()->route('vehicle-models.index')
+        return redirect()->route('vehicle_models.index')
             ->with('success', 'Modelo de vehículo creado exitosamente');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-// Para editar vehículo
-    public function edit(Vehicle $vehiculo)
+    public function edit(VehicleModel $vehicleModel)
     {
-        $modelos = VehicleModel::all();
-        return view('vehiculos.edit', compact('vehiculo', 'modelos'));
+        $brands = Brand::all();
+        return view('vehicle_model.edit', compact('vehicleModel', 'brands'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, VehicleModel $vehicleModel)
     {
         $request->validate([
-            'nombre' => 'required|string|max:100|unique:vehicle_models,nombre,' . $vehicleModel->id,
+            'descripcion' => 'required|string|max:100|unique:vehicle_models,descripcion,' . $vehicleModel->id,
+            'brand_id' => 'required|exists:brands,id',
         ]);
 
         $vehicleModel->update($request->all());
 
-        return redirect()->route('vehicle-models.index')
+        return redirect()->route('vehicle_models.index')
             ->with('success', 'Modelo de vehículo actualizado exitosamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(VehicleModel $vehicleModel)
     {
         $vehicleModel->delete();
-        return redirect()->route('vehicle-models.index')
+        return redirect()->route('vehicle_models.index')
             ->with('success', 'Modelo de vehículo eliminado exitosamente');
     }
 }

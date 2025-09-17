@@ -8,27 +8,18 @@ use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the vehicles.
-     */
     public function index()
     {
-        $vehiculos = Vehicle::with('modelo')->get(); // Traemos también el modelo
-        return view('vehiculos.index', compact('vehiculos'));
+        $vehiculos = Vehicle::with('modelo.brand')->get();
+        return view('vehicle.index', compact('vehiculos'));
     }
 
-    /**
-     * Show the form for creating a new vehicle.
-     */
     public function create()
     {
-        $modelos = VehicleModel::all(); // Para el dropdown de modelos
-        return view('vehiculos.create', compact('modelos'));
+        $modelos = VehicleModel::with('brand')->get();
+        return view('vehicle.create', compact('modelos'));
     }
 
-    /**
-     * Store a newly created vehicle in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -45,18 +36,12 @@ class VehicleController extends Controller
             ->with('success', 'Vehículo registrado exitosamente');
     }
 
-    /**
-     * Show the form for editing the specified vehicle.
-     */
     public function edit(Vehicle $vehiculo)
     {
-        $modelos = VehicleModel::all();
-        return view('vehiculos.edit', compact('vehiculo', 'modelos'));
+        $modelos = VehicleModel::with('brand')->get();
+        return view('vehicle.edit', compact('vehiculo', 'modelos'));
     }
 
-    /**
-     * Update the specified vehicle in storage.
-     */
     public function update(Request $request, Vehicle $vehiculo)
     {
         $request->validate([
@@ -73,9 +58,6 @@ class VehicleController extends Controller
             ->with('success', 'Vehículo actualizado exitosamente');
     }
 
-    /**
-     * Remove the specified vehicle from storage.
-     */
     public function destroy(Vehicle $vehiculo)
     {
         $vehiculo->delete();

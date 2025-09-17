@@ -11,20 +11,21 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('vehicles', function (Blueprint $table) {
-            $table->id();
-            $table->string('patente',10)->unique();
-            $table->string('color',50)->nulleable();
-            $table->foreignID('modelo_id',50)
-                ->constrained('vehicle_models')
-                ->onDelete('restrict');
-            $table->string('descripcion',100)->nulleable();
-            $table->enum('estado',['disponible','no disponible'])->default('disponible');
-            $table->timestamps();
-        });
-    }
+public function up()
+{
+    Schema::create('vehicles', function (Blueprint $table) {
+        $table->id();
+        $table->string('patente',10)->unique();
+        $table->string('color',50)->nullable(); // <- corregido
+        $table->foreignId('modelo_id') // <- corregido
+              ->constrained('vehicle_models')
+              ->onDelete('restrict');
+        $table->string('descripcion',100)->nullable(); // <- corregido
+        $table->enum('estado',['activo','inactivo'])->default('activo');
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.

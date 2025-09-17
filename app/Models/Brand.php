@@ -12,9 +12,9 @@ class Brand extends Model
         'descripcion',
     ];
 
-    public function modelos()
+    public function modelo()
     {
-        return $this->hasMany(Modelo::class);
+        return $this->hasMany(VehicleModel::class);
     }
 }
 

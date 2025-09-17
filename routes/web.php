@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VehicleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,14 +52,20 @@ Route::get('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerContr
 Route::post('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'register'])->name('registercustomer.submit');
 Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
 
-Route::get('/vehiculos',[App\Http\Controllers\VehicleController::class,'index'])->name('vehiculos.index');
+// Listado de vehículos
+Route::get('/vehiculos', [VehicleController::class, 'index'])->name('vehiculos.index');
 
+// Formulario de creación
 Route::get('/vehiculos/create', [VehicleController::class, 'create'])->name('vehiculos.create');
 
+// Guardar nuevo vehículo
 Route::post('/vehiculos', [VehicleController::class, 'store'])->name('vehiculos.store');
 
+// Formulario de edición
 Route::get('/vehiculos/{vehiculo}/edit', [VehicleController::class, 'edit'])->name('vehiculos.edit');
 
+// Actualizar vehículo
 Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name('vehiculos.update');
 
+// Eliminar vehículo
 Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy');
