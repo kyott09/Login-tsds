@@ -1,60 +1,41 @@
 @extends('layouts.admin')
+
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between aling-items-center">
-                    <span>{{__('Dashboard')}}</span>
-                    <a href="{{ route('tareas.create')}}" class="btn btn-primary btn-sm">Crear Tarea</a>
-                </div>
-                <div class="card-header">{{ __('Dashboard') }}</div>
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <table class="table" id="myTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Acciones</th> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tareas as $tarea)
-                                <tr>
-                                    <td>{{ $tarea->id }}</td>
-                                    <td>{{ $tarea->nombre }}</td>
-                                    <td>
-                                        <a href="{{ route('tareas.edit', $tarea->id)}}" class="btn btn-warning btn-sm">Editar</a>
-                                        <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estas seguro de eliminar esta tarea?')">
-                                                Eliminar
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+    <h2 class="mb-4">Listado de Tareas</h2>
 
-                </div>
-            </div>
-        </div>
-    </div>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <a href="{{ route('tareas.create') }}" class="btn btn-primary mb-3">Nueva Tarea</a>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>DNI</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($tareas as $tarea)
+                <tr>
+                    <td>{{ $tarea->id }}</td>
+                    <td>{{ $tarea->nombre_cliente }} {{ $tarea->apellido_cliente }}</td>
+                    <td>{{ $tarea->dni_cliente }}</td>
+                    <td>{{ $tarea->telefono_cliente }}</td>
+                    <td>{{ ucfirst($tarea->estado) }}</td>
+                    <td>
+                        <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">Editar</a>
+                        <!-- Aquí puedes agregar botón de eliminar si lo deseas -->
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
-
-@push('scripts')
-<script>    
-$(document).ready(function () {
-    $('#myTable').DataTable({
-    });
-});
-</script>
-@endpush

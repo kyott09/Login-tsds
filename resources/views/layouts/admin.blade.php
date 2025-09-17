@@ -237,7 +237,7 @@
               <li class="nav-item">
                 <a href="./index2.html" class="nav-link">
               <i class="nav-icon fas fa-cog"></i>
-                  <p>Servicio</p>
+                  <p>Orden de Trabajo</p>
                 </a>
               </li>
               <li class="nav-item">

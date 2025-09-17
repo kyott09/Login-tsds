@@ -4,29 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateTareasTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('tareas', function (Blueprint $table) {
-            $table->id();
-            $table->string("nombre");
+            $table->id(); // Número de tarea (auto incremental)
+            $table->string('nombre_cliente');
+            $table->string('apellido_cliente');
+            $table->string('dni_cliente');
+            $table->string('telefono_cliente');
+            $table->string('direccion_cliente');
+            $table->text('descripcion');
+            $table->enum('estado', ['vista', 'en proceso', 'terminada', 'no terminada'])->default('vista');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('tareas');
     }
-};
+}
+
