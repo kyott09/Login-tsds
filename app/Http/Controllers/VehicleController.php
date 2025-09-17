@@ -28,7 +28,17 @@ class VehicleController extends Controller
             'color' => 'nullable|string|max:50',
             'descripcion' => 'nullable|string|max:255',
             'estado' => 'required|in:activo,inactivo',
+        ], [
+            'patente.required' => 'El campo Patente es obligatorio.',
+            'patente.unique' => 'La patente ya está registrada.',
+            'modelo_id.required' => 'Debe seleccionar un modelo.',
+            'modelo_id.exists' => 'El modelo seleccionado no es válido.',
+            'color.max' => 'El color no puede tener más de 50 caracteres.',
+            'descripcion.max' => 'La descripción no puede tener más de 255 caracteres.',
+            'estado.required' => 'Debe seleccionar un estado.',
+            'estado.in' => 'El estado seleccionado no es válido.',
         ]);
+
 
         Vehicle::create($request->all());
 
@@ -50,7 +60,18 @@ class VehicleController extends Controller
             'color' => 'nullable|string|max:50',
             'descripcion' => 'nullable|string|max:255',
             'estado' => 'required|in:activo,inactivo',
+        ], [
+            'patente.required' => 'El campo Patente es obligatorio.',
+            'patente.unique' => 'La patente ya está registrada.',
+            'modelo_id.required' => 'Debe seleccionar un modelo.',
+            'modelo_id.exists' => 'El modelo seleccionado no es válido.',
+            'color.max' => 'El color no puede tener más de 50 caracteres.',
+            'descripcion.max' => 'La descripción no puede tener más de 255 caracteres.',
+            'estado.required' => 'Debe seleccionar un estado.',
+            'estado.in' => 'El estado seleccionado no es válido.',
         ]);
+
+
 
         $vehiculo->update($request->all());
 

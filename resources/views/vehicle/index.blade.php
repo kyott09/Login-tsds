@@ -9,9 +9,12 @@
                     <a href="{{ route('vehiculos.create') }}" class="btn btn-primary btn-sm">Registrar Vehículo</a>
                 </div>
                 <div class="card-body">
+
+                    {{-- Mensajes de éxito --}}
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
+
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -28,7 +31,12 @@
                                 <tr>
                                     <td>{{ $vehiculo->id }}</td>
                                     <td>{{ $vehiculo->patente }}</td>
-                                    <td>{{ $vehiculo->modelo->nombre ?? 'Sin modelo' }}</td>
+                                    <td>
+                                        {{ $vehiculo->modelo->descripcion ?? 'Sin modelo' }}
+                                        @if($vehiculo->modelo && $vehiculo->modelo->brand)
+                                            ({{ $vehiculo->modelo->brand->descripcion }})
+                                        @endif
+                                    </td>
                                     <td>{{ $vehiculo->color }}</td>
                                     <td>{{ ucfirst($vehiculo->estado) }}</td>
                                     <td>
@@ -43,6 +51,7 @@
                             @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
