@@ -16,9 +16,12 @@ class VehicleController extends Controller
 
     public function create()
     {
-        $modelos = VehicleModel::with('brand')->get();
-        return view('vehicle.create', compact('modelos'));
+        // Trae marcas con modelos asociados
+        $brands = \App\Models\Brand::with('vehicleModels')->get();
+
+        return view('vehicle\create', compact('brands'));
     }
+
 
     public function store(Request $request)
     {

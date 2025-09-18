@@ -21,7 +21,7 @@ public function up()
               ->constrained('vehicle_models')
               ->onDelete('restrict');
         $table->string('descripcion',100)->nullable(); // <- corregido
-        $table->enum('estado',['activo','inactivo'])->default('activo');
+        $table->enum('estado',['disponible','no disponible'])->default('disponible');
         $table->timestamps();
     });
 }

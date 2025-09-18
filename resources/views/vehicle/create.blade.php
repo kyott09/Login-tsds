@@ -28,16 +28,23 @@
                             <input type="text" name="patente" id="patente" class="form-control" value="{{ old('patente') }}" required>
                         </div>
 
+                        {{-- Marca --}}
+                        <div class="mb-3">
+                            <label for="brand_id" class="form-label">Marca</label>
+                            <select id="brand_id" class="form-select">
+                                <option value="">Seleccione una marca</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->descripcion }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         {{-- Modelo --}}
                         <div class="mb-3">
                             <label for="modelo_id" class="form-label">Modelo</label>
                             <select name="modelo_id" id="modelo_id" class="form-select" required>
                                 <option value="">Seleccione un modelo</option>
-                                @foreach($modelos as $modelo)
-                                    <option value="{{ $modelo->id }}" {{ old('modelo_id') == $modelo->id ? 'selected' : '' }}>
-                                        {{ $modelo->descripcion }} @if($modelo->brand) ({{ $modelo->brand->descripcion }}) @endif
-                                    </option>
-                                @endforeach
+                                {{-- Se llena dinámicamente con JS --}}
                             </select>
                         </div>
 
@@ -71,4 +78,26 @@
         </div>
     </div>
 </div>
+
+{{-- Script para menú doble --}}
+<script>
+    // Pasamos las marcas con modelos a JS
+    const brands = @json($brands);
+
+    document.getElementById('brand_id').addEventListener('change', function () {
+        const brandId = this.value;
+        const modeloSelect = document.getElementById('modelo_id');
+        modeloSelect.innerHTML = '<option value="">Seleccione un modelo</option>';
+
+        if (brandId) {
+            // Buscar la marca seleccionada
+            const brand = brands.find(b => b.id == brandId);
+            if (brand && brand.vehicle_models.length) {
+                brand.vehicle_models.forEach(modelo => {
+                    modeloSelect.innerHTML += `<option value="${modelo.id}">${modelo.descripcion}</option>`;
+                });
+            }
+        }
+    });
+</script>
 @endsection
