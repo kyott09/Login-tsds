@@ -8,37 +8,55 @@
         @csrf
         @method('PUT')
 
-        <!-- Campos igual que en create -->
+        {{-- Cliente (User) --}}
         <div class="form-group mb-3">
-            <label for="nombre_cliente">Nombre</label>
-            <input type="text" class="form-control" name="nombre_cliente" value="{{ old('nombre_cliente', $tarea->nombre_cliente) }}" required>
+            <label for="user_id">Cliente</label>
+            <select name="user_id" class="form-control" required>
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $tarea->user_id == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }} ({{ $user->email }})
+                    </option>
+                @endforeach
+            </select>
         </div>
 
+        {{-- Fecha de creación --}}
         <div class="form-group mb-3">
-            <label for="apellido_cliente">Apellido</label>
-            <input type="text" class="form-control" name="apellido_cliente" value="{{ old('apellido_cliente', $tarea->apellido_cliente) }}" required>
+            <label for="fecha_creacion">Fecha de creación</label>
+            <input type="date" class="form-control" name="fecha_creacion" value="{{ old('fecha_creacion', $tarea->fecha_creacion) }}" required>
         </div>
 
+        {{-- Servicio --}}
         <div class="form-group mb-3">
-            <label for="dni_cliente">DNI</label>
-            <input type="text" class="form-control" name="dni_cliente" value="{{ old('dni_cliente', $tarea->dni_cliente) }}" required>
+            <label for="servicio">Servicio</label>
+            <select class="form-control" name="servicio" required>
+                @foreach(['instalacion_wifi', 'mantenimiento_redes', 'configuracion_router', 'extension_cobertura', 'diagnostico_problemas', 'instalacion_camaras'] as $servicio)
+                    <option value="{{ $servicio }}" {{ $tarea->servicio === $servicio ? 'selected' : '' }}>
+                        {{ ucfirst(str_replace('_',' ',$servicio)) }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
+        {{-- Prioridad --}}
         <div class="form-group mb-3">
-            <label for="telefono_cliente">Teléfono</label>
-            <input type="text" class="form-control" name="telefono_cliente" value="{{ old('telefono_cliente', $tarea->telefono_cliente) }}" required>
+            <label for="prioridad">Prioridad</label>
+            <select class="form-control" name="prioridad" required>
+                @foreach(['premium', 'basico'] as $prioridad)
+                    <option value="{{ $prioridad }}" {{ $tarea->prioridad === $prioridad ? 'selected' : '' }}>
+                        {{ ucfirst($prioridad) }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="direccion_cliente">Dirección</label>
-            <input type="text" class="form-control" name="direccion_cliente" value="{{ old('direccion_cliente', $tarea->direccion_cliente) }}" required>
-        </div>
-
+        {{-- Descripción --}}
         <div class="form-group mb-3">
             <label for="descripcion">Descripción</label>
             <textarea class="form-control" name="descripcion" required>{{ old('descripcion', $tarea->descripcion) }}</textarea>
         </div>
 
+        {{-- Estado --}}
         <div class="form-group mb-4">
             <label for="estado">Estado</label>
             <select class="form-control" name="estado" required>

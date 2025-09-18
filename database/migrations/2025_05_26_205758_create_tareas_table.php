@@ -9,16 +9,27 @@ class CreateTareasTable extends Migration
     public function up()
     {
         Schema::create('tareas', function (Blueprint $table) {
-            $table->id(); // Número de tarea (auto incremental)
-            $table->string('nombre_cliente');
-            $table->string('apellido_cliente');
-            $table->string('dni_cliente');
-            $table->string('telefono_cliente');
-            $table->string('direccion_cliente');
+            $table->id();
+
+            // Relación con users
+            $table->unsignedBigInteger('user_id');
+
+            // Fecha de creación de la tarea
+            $table->date('fecha_creacion')->nullable();
+
+            // Servicio y prioridad
+            $table->string('servicio');
+            $table->enum('prioridad', ['premium', 'basico'])->default('basico');
+
+            // Descripción y estado
             $table->text('descripcion');
             $table->enum('estado', ['vista', 'en proceso', 'terminada', 'no terminada'])->default('vista');
+
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
     }
 
     public function down()
@@ -26,4 +37,3 @@ class CreateTareasTable extends Migration
         Schema::dropIfExists('tareas');
     }
 }
-

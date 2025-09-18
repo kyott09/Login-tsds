@@ -15,8 +15,9 @@
             <tr>
                 <th>#</th>
                 <th>Cliente</th>
-                <th>DNI</th>
-                <th>Teléfono</th>
+                <th>Servicio</th>
+                <th>Prioridad</th>
+                <th>Fecha</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -25,13 +26,26 @@
             @foreach($tareas as $tarea)
                 <tr>
                     <td>{{ $tarea->id }}</td>
-                    <td>{{ $tarea->nombre_cliente }} {{ $tarea->apellido_cliente }}</td>
-                    <td>{{ $tarea->dni_cliente }}</td>
-                    <td>{{ $tarea->telefono_cliente }}</td>
+                    {{-- Nombre del cliente (User) --}}
+                    <td>
+                        @if($tarea->user)
+                            {{ $tarea->user->name }} ({{ $tarea->user->email }})
+                        @else
+                            <em>Sin cliente</em>
+                        @endif
+                    </td>
+                    {{-- Servicio --}}
+                    <td>{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}</td>
+                    {{-- Prioridad --}}
+                    <td>{{ ucfirst($tarea->prioridad) }}</td>
+                    {{-- Fecha de creación --}}
+                    <td>{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}</td>
+                    {{-- Estado --}}
                     <td>{{ ucfirst($tarea->estado) }}</td>
+                    {{-- Acciones --}}
                     <td>
                         <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">Editar</a>
-                        <!-- Aquí puedes agregar botón de eliminar si lo deseas -->
+                        <!-- Botón eliminar opcional -->
                     </td>
                 </tr>
             @endforeach

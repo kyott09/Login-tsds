@@ -11,43 +11,75 @@
                     <form action="{{ route('tareas.store') }}" method="POST">
                         @csrf
 
-                        <!-- Número de Tarea (asumido autogenerado por backend) -->
+                        <!-- Número de Tarea -->
                         <div class="form-group mb-3">
                             <label for="numero_tarea">Número de Tarea</label>
-                            <input type="text" class="form-control" id="numero_tarea" name="numero_tarea" value="{{ old('numero_tarea', $numeroTarea ?? 'Auto') }}" readonly>
+                            <input type="text" class="form-control" id="numero_tarea" name="numero_tarea" 
+                                   value="{{ old('numero_tarea', $numeroTarea ?? 'Auto') }}" readonly>
                         </div>
 
-                        <!-- Datos del Cliente -->
-                        <h5>Datos del Cliente</h5>
+                        <!-- Seleccionar Usuario Registrado -->
                         <div class="form-group mb-3">
-                            <label for="nombre_cliente">Nombre</label>
-                            <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" required>
+                            <label for="user_id">Cliente/Usuario</label>
+                            <select class="form-control" id="user_id" name="user_id" required>
+                                <option value="">Seleccione un usuario</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">
+                                        {{ $user->name }} - {{ $user->email }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label for="apellido_cliente">Apellido</label>
-                            <input type="text" class="form-control" id="apellido_cliente" name="apellido_cliente" required>
-                        </div>
 
-                        <div class="form-group mb-3">
-                            <label for="dni_cliente">DNI</label>
-                            <input type="text" class="form-control" id="dni_cliente" name="dni_cliente" required>
-                        </div>
-
+                        <!-- Teléfono y Dirección del Cliente (opcional si querés mostrar) -->
+                        {{-- 
                         <div class="form-group mb-3">
                             <label for="telefono_cliente">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono_cliente" name="telefono_cliente" required>
+                            <input type="text" class="form-control" id="telefono_cliente" name="telefono_cliente">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="direccion_cliente">Dirección</label>
-                            <input type="text" class="form-control" id="direccion_cliente" name="direccion_cliente" required>
+                            <input type="text" class="form-control" id="direccion_cliente" name="direccion_cliente">
+                        </div>
+                        --}}
+
+                        <!-- Fecha de Creación -->
+                        <div class="form-group mb-3">
+                            <label for="fecha_creacion">Fecha de Creación</label>
+                            <input type="date" class="form-control" id="fecha_creacion" name="fecha_creacion" 
+                                   value="{{ old('fecha_creacion', date('Y-m-d')) }}" required>
                         </div>
 
                         <!-- Descripción de la tarea -->
                         <div class="form-group mb-3">
                             <label for="descripcion">Descripción de la Tarea</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
+                        </div>
+
+                        <!-- Servicios -->
+                        <div class="form-group mb-4">
+                            <label for="servicio">Servicio</label>
+                            <select class="form-control" id="servicio" name="servicio" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="instalacion_wifi">Instalación de Wi-Fi</option>
+                                <option value="mantenimiento_redes">Mantenimiento de Redes</option>
+                                <option value="configuracion_router">Configuración de Router</option>
+                                <option value="extension_cobertura">Extensión de Cobertura Wi-Fi</option>
+                                <option value="diagnostico_problemas">Diagnóstico y Reparación</option>
+                                <option value="instalacion_camaras">Instalación de Cámaras IP</option>
+                            </select>
+                        </div>
+
+                        <!-- Prioridad -->
+                        <div class="form-group mb-4">
+                            <label for="prioridad">Prioridad</label>
+                            <select class="form-control" id="prioridad" name="prioridad" required>
+                                <option value="">Seleccione prioridad</option>
+                                <option value="premium">Premium</option>
+                                <option value="basico">Básico</option>
+                            </select>
                         </div>
 
                         <!-- Estado -->
