@@ -30,7 +30,7 @@ class VehicleController extends Controller
             'modelo_id' => 'required|exists:vehicle_models,id',
             'color' => 'nullable|string|max:50',
             'descripcion' => 'nullable|string|max:255',
-            'estado' => 'required|in:activo,inactivo',
+            'estado' => 'required|in:disponible,no disponible',
         ], [
             'patente.required' => 'El campo Patente es obligatorio.',
             'patente.unique' => 'La patente ya está registrada.',

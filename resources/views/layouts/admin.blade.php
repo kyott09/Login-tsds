@@ -65,15 +65,21 @@
           <i class="fas fa-search"></i>
         </a>
         <!-- Miniatura de usuario -->
-        <div class="dropdown">
+        <div class="dropdown" title="{{ Auth::user()->email }}">
           <a href="#" class="nav-link p-0 ml-2" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;">
-            <img src="{{asset('dist/img/USUARIO.png')}}" class="img-circle elevation-2" alt="User Image" style="width:32px; height:32px; object-fit:cover;">
+            <img src="{{ auth()->user()->profile_image ? asset('img/users_profile/' . auth()->user()->profile_image) : asset('dist/img/USUARIO.png') }}" 
+                class="img-circle elevation-2" 
+                alt="User Image" 
+                style="width:32px; height:32px; object-fit:cover;">
+            <span class="ml-2">{{ Auth::user()->name }}</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <span class="dropdown-item-text">Matias Georgieff</span>
+            <a href="{{ route('user.profile') }}" class="dropdown-item">
+              <i class="fas fa-user mr-2"></i> Perfil
+            </a>
             <div class="dropdown-divider"></div>
             <a href="{{ route('logout') }}" class="dropdown-item"
-               onclick="event.preventDefault(); document.getElementById('logout-form-navbar').submit();">
+              onclick="event.preventDefault(); document.getElementById('logout-form-navbar').submit();">
               <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
             </a>
             <form id="logout-form-navbar" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -81,6 +87,7 @@
             </form>
           </div>
         </div>
+
       </li>
 
       <!-- Messages Dropdown Menu -->
@@ -192,15 +199,16 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('dist/img/USUARIO.png')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Matias Georgieff</a>
-        </div>
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{{ auth()->user()->profile_image ? asset('img/users_profile/' . auth()->user()->profile_image) : asset('dist/img/USUARIO.png') }}" 
+            class="img-circle elevation-2" alt="User Image">
       </div>
+      <div class="info">
+        <a href="{{ route('user.profile') }}" class="d-block">{{ Auth::user()->name }}</a>
+      </div>
+    </div>
+
 
       <!-- SidebarSearch Form -->
       <div class="form-inline">
@@ -220,7 +228,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-close">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-signature"></i>
               <p>
                 Registrar
@@ -230,20 +238,27 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('vehiculos.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-car"></i>
-                  <p>Vehiculo</p>
+                  <i class="nav-icon fas fa-car"></i>
+                  <p>Vehículo</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index2.html" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
+                  <i class="nav-icon fas fa-cog"></i>
                   <p>Orden de Trabajo</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
+                  <i class="nav-icon fas fa-users"></i>
                   <p>Empleado</p>
+                </a>
+              </li>
+              <!-- Nuevo item Registrar Tarea -->
+              <li class="nav-item">
+                <a href="{{ route('tareas.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-tasks"></i>
+                  <p>Tarea</p>
                 </a>
               </li>
             </ul>

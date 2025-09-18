@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -69,3 +70,9 @@ Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name(
 
 // Eliminar vehículo
 Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/perfil', [UserController::class, 'profile'])->name('user.profile');
+    Route::put('/perfil', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::delete('/perfil/imagen', [UserController::class, 'deleteProfileImage'])->name('user.deleteProfileImage');
+});

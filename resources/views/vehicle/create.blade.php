@@ -64,10 +64,11 @@
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado</label>
                             <select name="estado" id="estado" class="form-select" required>
-                                <option value="activo" {{ old('estado') == 'activo' ? 'selected' : '' }}>Activo</option>
-                                <option value="inactivo" {{ old('estado') == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                                <option value="disponible" {{ old('estado') == 'disponible' ? 'selected' : '' }}>Disponible</option>
+                                <option value="no disponible" {{ old('estado') == 'no disponible' ? 'selected' : '' }}>No disponible</option>
                             </select>
                         </div>
+
 
                         {{-- Botones --}}
                         <button type="submit" class="btn btn-primary">Registrar Vehículo</button>
