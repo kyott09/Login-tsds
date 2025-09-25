@@ -78,9 +78,24 @@ Route::get('/calendar', [App\Http\Controllers\CalendarController::class, 'index'
 // ----------------------
 // Vehículos
 // ----------------------
-Route::get('/vehiculos', [VehicleController::class, 'index'])->name('vehiculos.index');
-Route::get('/vehiculos/create', [VehicleController::class, 'create'])->name('vehiculos.create');
-Route::post('/vehiculos', [VehicleController::class, 'store'])->name('vehiculos.store');
-Route::get('/vehiculos/{vehiculo}/edit', [VehicleController::class, 'edit'])->name('vehiculos.edit');
-Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name('vehiculos.update');
-Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy');
+Route::get('/vehiculos', [VehicleController::class, 'index'])->name('vehiculos.index') 
+    ->middleware('permission:ver vehiculos');
+
+Route::get('/vehiculos/create', [VehicleController::class, 'create'])->name('vehiculos.create')
+    ->middleware('permission:crear vehiculos');
+
+Route::post('/vehiculos', [VehicleController::class, 'store'])->name('vehiculos.store')
+    ->middleware('permission:crear vehiculos');
+
+Route::get('/vehiculos/{vehiculo}/edit', [VehicleController::class, 'edit'])->name('vehiculos.edit')
+    ->middleware('permission:editar vehiculos');
+
+Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name('vehiculos.update')
+    ->middleware('permission:editar vehiculos');
+
+Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy')
+    ->middleware('permission:borrar vehiculos');
+
+// ----------------------
+// Empleados
+// ----------------------

@@ -6,7 +6,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Listado de Vehículos</span>
-                    <a href="{{ route('vehiculos.create') }}" class="btn btn-primary btn-sm">Registrar Vehículo</a>
+                    @can('crear vehiculo')
+                        <a href="{{ route('vehiculos.create') }}" class="btn btn-primary btn-sm">Registrar Vehículo</a>
+                    @endcan
                 </div>
                 <div class="card-body">
 
@@ -40,12 +42,16 @@
                                     <td>{{ $vehiculo->color }}</td>
                                     <td>{{ ucfirst($vehiculo->estado) }}</td>
                                     <td>
+                                        @can ('editar vehiculos')
                                         <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                        @endcan
+                                        @can ('borrar vehiculos')
                                         <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" style="display:inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar?')">Eliminar</button>
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

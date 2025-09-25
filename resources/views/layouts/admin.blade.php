@@ -237,10 +237,12 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('vehiculos.index')}}" class="nav-link">
+                @can ('ver vehiculos')
+                  <a href="{{ route('vehiculos.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-car"></i>
                   <p>Vehículo</p>
                 </a>
+                @endcan
               </li>
               <li class="nav-item">
                 <a href="./index2.html" class="nav-link">
@@ -249,7 +251,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Empleado</p>
                 </a>
