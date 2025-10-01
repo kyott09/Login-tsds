@@ -48,12 +48,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     // Tareas
-    Route::get('/tareas', [App\Http\Controllers\TareaController::class,'index'])->name('tareas.index');
-    Route::get('/tareas/create', [App\Http\Controllers\TareaController::class, 'create'])->name('tareas.create');
-    Route::post('/tareas', [App\Http\Controllers\TareaController::class, 'store'])->name('tareas.store');
-    Route::get('/tareas/{tarea}/edit', [App\Http\Controllers\TareaController::class, 'edit'])->name('tareas.edit');
-    Route::put('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'update'])->name('tareas.update');
-    Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])->name('tareas.destroy');
+    Route::get('/tareas', [App\Http\Controllers\TareaController::class,'index'])->name('tareas.index')
+        ->middleware('permission:ver tarea');
+    
+    Route::get('/tareas/create', [App\Http\Controllers\TareaController::class, 'create'])->name('tareas.create')
+        ->middleware('permission:crear tarea');
+    
+    Route::post('/tareas', [App\Http\Controllers\TareaController::class, 'store'])->name('tareas.store')
+        ->middleware('permission:crear tarea');
+    
+    Route::get('/tareas/{tarea}/edit', [App\Http\Controllers\TareaController::class, 'edit'])->name('tareas.edit')
+        ->middleware('permission:editar tarea');
+    
+    Route::put('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'update'])->name('tareas.update')
+        ->middleware('permission:editar tarea');
+    
+    Route::delete('/tareas/{tarea}', [App\Http\Controllers\TareaController::class, 'destroy'])->name('tareas.destroy')
+        ->middleware('permission:borrar tarea');
 
     // Perfil de usuario
     Route::get('/perfil', [UserController::class, 'profile'])->name('user.profile');

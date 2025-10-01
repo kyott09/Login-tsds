@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role; 
 
 class RegisterController extends Controller
 {
@@ -20,16 +21,16 @@ class RegisterController extends Controller
     // Mostrar formulario de registro
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Ajusta según tu carpeta
+        return view('auth.register');
     }
 
-    // Procesar registro
+    // procesar registro
     public function register(Request $request)
     {
         $request->validate([
             'name' => ['required','string','max:255'],
             'email' => ['required','string','email','max:255','unique:users'],
-            'user' => ['required','string','max:255','unique:users'], // nombre de usuario único
+            'user' => ['required','string','max:255','unique:users'],
             'password' => ['required','string','min:8','confirmed'],
         ]);
 
@@ -39,6 +40,9 @@ class RegisterController extends Controller
             'user' => $request->user,
             'password' => Hash::make($request->password),
         ]);
+
+        // asignar automáticamente el rol "empleado"
+        $user->assignRole('empleado');
 
         event(new Registered($user));
 

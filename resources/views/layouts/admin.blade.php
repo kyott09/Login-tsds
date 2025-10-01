@@ -221,7 +221,7 @@
           </div>
         </div>
       </div>
-
+    @can ('ver user')
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -231,40 +231,49 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-signature"></i>
               <p>
-                Registrar
+                @role('admin')
+                  Registrar
+                @else
+                  Ver
+                @endrole
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                @can ('ver vehiculos')
-                  <a href="{{ route('vehiculos.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-car"></i>
-                  <p>Vehículo</p>
-                </a>
-                @endcan
-              </li>
+              @can('ver vehiculos')
+                <li class="nav-item">
+                  <a href="{{ route('vehiculos.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-car"></i>
+                    <p>Vehículo</p>
+                  </a>
+                </li>
+              @endcan
+
               <li class="nav-item">
                 <a href="./index2.html" class="nav-link">
                   <i class="nav-icon fas fa-cog"></i>
                   <p>Orden de Trabajo</p>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Empleado</p>
                 </a>
               </li>
-              <!-- Nuevo item Registrar Tarea -->
+              @can ('ver tarea')
               <li class="nav-item">
                 <a href="{{ route('tareas.index') }}" class="nav-link">
                   <i class="nav-icon fas fa-tasks"></i>
                   <p>Tarea</p>
                 </a>
               </li>
+              @endcan
             </ul>
           </li>
+
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -627,6 +636,7 @@
           </li>
         </ul>
       </nav>
+    @endcan
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

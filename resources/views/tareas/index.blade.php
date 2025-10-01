@@ -7,9 +7,9 @@
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-
+    @can ('crear tarea')
     <a href="{{ route('tareas.create') }}" class="btn btn-primary mb-3">Nueva Tarea</a>
-
+    @endcan
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -44,8 +44,10 @@
                     <td>{{ ucfirst($tarea->estado) }}</td>
                     {{-- Acciones --}}
                     <td>
+                        @can ('editar tarea')
                         <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">Editar</a>
                         <!-- Botón eliminar opcional -->
+                        @endcan
                     </td>
                 </tr>
             @endforeach
