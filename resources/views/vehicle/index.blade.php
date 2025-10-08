@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span>Listado de Vehículos</span>
-                    @can('crear vehiculo')
+                    @can('crear vehiculos')
                         <a href="{{ route('vehiculos.create') }}" class="btn btn-primary btn-sm">Registrar Vehículo</a>
                     @endcan
                 </div>
