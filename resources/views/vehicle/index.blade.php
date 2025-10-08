@@ -17,7 +17,7 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="tablaDetalle">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -64,3 +64,34 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    console.log("jQuery listo!");
+});
+
+$(document).ready(function() {
+    $('#tablaDetalle').DataTable({
+        "language":{
+            "info":"_TOTAL_ registros",
+            "search":"Buscar",
+            "paginate": {
+                "next":"Siguiente",
+                "previous":"Anterior"
+            },
+            "lengthMenu":"Mostrar <select>"+
+                '<option value="5">5</option>'+
+                '<option value="10">10</option>'+
+                "<select> registros",
+            "loadingRecords":"Cargando...",
+            "processing":"Procesando...",
+            "emptyTable":"No hay datos",
+            "zeroRecords":"No hay coincidencias",
+            "infoEmpty":"",
+            "infoFiltered":""
+        }
+    });
+});
+</script>
+@endpush
