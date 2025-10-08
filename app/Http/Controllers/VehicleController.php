@@ -3,16 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
+use App\Models\Brand;
 use App\Models\VehicleModel;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    public function index()
+
+        public function index(Request $request)
     {
-        $vehiculos = Vehicle::with('modelo.brand')->get();
-        return view('vehicle.index', compact('vehiculos'));
+        $brands = Brand::all();
+        $desde = $request->desde;
+        $hasta = $request->hasta;
+        $modelo_id = $request->modelo_id;
+        if(count($request->all()) > 0) {
+            $sql = Vehicle::with('modelo.brand');
+            if($modelo_id) {
+                $sql = $sql->where('modelo_id', $modelo_id);
+            }
+            if($desde) {
+                $sql = $sql->whereDate('created_at', '>=', $desde);
+            }
+            if($hasta) {
+                $sql = $sql->whereDate('created_at', '<=', $hasta);
+            }
+            $vehiculos = $sql
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            $vehiculos = Vehicle::with('modelo.brand')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            $modelo_id = null;
+            $desde = null;
+            $hasta = null;
+        }
+
+        return view('vehicle.index', compact('vehiculos',
+            'brands',
+            'modelo_id',
+            'desde',
+            'hasta'
+        ));
     }
+
+
+    
 
     public function create()
     {
@@ -45,7 +81,7 @@ class VehicleController extends Controller
 
         Vehicle::create($request->all());
 
-        return redirect()->route('vehiculos.index')
+        return redirect()->route('vehicle.index')
             ->with('success', 'Vehículo registrado exitosamente');
     }
 
@@ -78,14 +114,14 @@ class VehicleController extends Controller
 
         $vehiculo->update($request->all());
 
-        return redirect()->route('vehiculos.index')
+        return redirect()->route('vehicle.index')
             ->with('success', 'Vehículo actualizado exitosamente');
     }
 
     public function destroy(Vehicle $vehiculo)
     {
         $vehiculo->delete();
-        return redirect()->route('vehiculos.index')
+        return redirect()->route('vehicle.index')
             ->with('success', 'Vehículo eliminado exitosamente');
     }
 }

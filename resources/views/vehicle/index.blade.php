@@ -11,6 +11,7 @@
                     @endcan
                 </div>
                 <div class="card-body">
+                    @include('vehicle.busqueda')
 
                     {{-- Mensajes de éxito --}}
                     @if (session('success'))
