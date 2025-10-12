@@ -5,47 +5,44 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use App\Models\Brand;
 use App\Models\VehicleModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
 
-        public function index(Request $request)
+    public function index(Request $request)
     {
         $brands = Brand::all();
-        $desde = $request->desde;
-        $hasta = $request->hasta;
-        $modelo_id = $request->modelo_id;
-        if(count($request->all()) > 0) {
-            $sql = Vehicle::with('modelo.brand');
-            if($modelo_id) {
-                $sql = $sql->where('modelo_id', $modelo_id);
-            }
-            if($desde) {
-                $sql = $sql->whereDate('created_at', '>=', $desde);
-            }
-            if($hasta) {
-                $sql = $sql->whereDate('created_at', '<=', $hasta);
-            }
-            $vehiculos = $sql
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else {
-            $vehiculos = Vehicle::with('modelo.brand')
-                ->orderBy('created_at', 'desc')
-                ->get();
-            $modelo_id = null;
-            $desde = null;
-            $hasta = null;
+        $vehiculos = Vehicle::with('modelo.brand');
+
+        if ($request->filled('modelo_id')) {
+            $vehiculos = $vehiculos->where('modelo_id', $request->modelo_id);
         }
 
-        return view('vehicle.index', compact('vehiculos',
-            'brands',
-            'modelo_id',
-            'desde',
-            'hasta'
-        ));
+        if ($request->filled('desde')) {
+            $vehiculos = $vehiculos->whereDate('created_at', '>=', $request->desde);
+        }
+
+        if ($request->filled('hasta')) {
+            $vehiculos = $vehiculos->whereDate('created_at', '<=', $request->hasta);
+        }
+
+        $vehiculos = $vehiculos->orderBy('created_at', 'desc')->get();
+
+        if ($request->has('pdf')) {
+            return $this->exportPDF($request);
+        }
+
+        return view('vehicle.index', [
+            'vehiculos' => $vehiculos,
+            'brands' => $brands,
+            'modelo_id' => $request->modelo_id,
+            'desde' => $request->desde,
+            'hasta' => $request->hasta,
+        ]);
     }
+
 
 
     
@@ -124,4 +121,30 @@ class VehicleController extends Controller
         return redirect()->route('vehicle.index')
             ->with('success', 'Vehículo eliminado exitosamente');
     }
+
+    public function exportPdf(Request $request)
+    {
+        $desde = $request->desde;
+        $hasta = $request->hasta;
+        $modelo_id = $request->modelo_id;
+
+        $sql = Vehicle::with('modelo.brand');
+        if($modelo_id) {
+            $sql = $sql->where('modelo_id', $modelo_id);
+        }
+        if($desde) {
+            $sql = $sql->whereDate('created_at', '>=', $desde);
+        }
+        if($hasta) {
+            $sql = $sql->whereDate('created_at', '<=', $hasta);
+        }
+        $vehiculos = $sql
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $pdf = Pdf::loadView('vehicle.pdf', compact('vehiculos', 'desde', 'hasta', 'modelo_id'));
+        return $pdf->download('vehiculos_report.pdf');
+    }
+
+
 }

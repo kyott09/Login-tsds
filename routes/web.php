@@ -110,3 +110,6 @@ Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->n
 // ----------------------
 // Empleados
 // ----------------------
+
+Route::get('/vehiculos/export/pdf', [App\Http\Controllers\VehicleController::class, 'exportPDF'])
+    ->name('vehiculos.exportPdf');

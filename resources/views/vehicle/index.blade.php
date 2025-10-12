@@ -10,14 +10,45 @@
                         <a href="{{ route('vehiculos.create') }}" class="btn btn-primary btn-sm">Registrar Vehículo</a>
                     @endcan
                 </div>
+
                 <div class="card-body">
-                    @include('vehicle.busqueda')
+                    {{-- Filtros de búsqueda --}}
+                    <form action="{{ route('vehiculos.index') }}" method="GET" class="mb-4">
+                        <div class="row">
+                            {{-- Incluye los campos del archivo de búsqueda --}}
+                            @include('vehicle.busqueda')
+
+                            {{-- Botones de acción --}}
+                            <div class="form-group col-md-3 d-flex align-items-end">
+                                <div class="btn-group" role="group" aria-label="Acciones">
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+
+                                    <a href="{{ route('vehiculos.exportPdf', [], false) .
+                                        '?desde=' . request('desde') .
+                                        '&hasta=' . request('hasta') .
+                                        '&modelo_id=' . request('modelo_id') }}"
+                                        class="btn btn-danger" target="_blank">
+                                        <i class="fas fa-file-pdf"></i> PDF
+                                    </a>
+
+                                    <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary">
+                                        <i class="fas fa-eraser"></i> Limpiar
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 
                     {{-- Mensajes de éxito --}}
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
+                    {{-- Tabla de vehículos --}}
                     <table class="table table-bordered" id="tablaDetalle">
                         <thead>
                             <tr>
@@ -43,15 +74,15 @@
                                     <td>{{ $vehiculo->color }}</td>
                                     <td>{{ ucfirst($vehiculo->estado) }}</td>
                                     <td>
-                                        @can ('editar vehiculos')
-                                        <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                        @can('editar vehiculos')
+                                            <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                         @endcan
-                                        @can ('borrar vehiculos')
-                                        <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar?')">Eliminar</button>
-                                        </form>
+                                        @can('borrar vehiculos')
+                                            <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar?')">Eliminar</button>
+                                            </form>
                                         @endcan
                                     </td>
                                 </tr>
@@ -69,28 +100,24 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    console.log("jQuery listo!");
-});
-
-$(document).ready(function() {
     $('#tablaDetalle').DataTable({
-        "language":{
-            "info":"_TOTAL_ registros",
-            "search":"Buscar",
+        "language": {
+            "info": "_TOTAL_ registros",
+            "search": "Buscar",
             "paginate": {
-                "next":"Siguiente",
-                "previous":"Anterior"
+                "next": "Siguiente",
+                "previous": "Anterior"
             },
-            "lengthMenu":"Mostrar <select>"+
-                '<option value="5">5</option>'+
-                '<option value="10">10</option>'+
+            "lengthMenu": "Mostrar <select>" +
+                '<option value="5">5</option>' +
+                '<option value="10">10</option>' +
                 "<select> registros",
-            "loadingRecords":"Cargando...",
-            "processing":"Procesando...",
-            "emptyTable":"No hay datos",
-            "zeroRecords":"No hay coincidencias",
-            "infoEmpty":"",
-            "infoFiltered":""
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "emptyTable": "No hay datos",
+            "zeroRecords": "No hay coincidencias",
+            "infoEmpty": "",
+            "infoFiltered": ""
         }
     });
 });

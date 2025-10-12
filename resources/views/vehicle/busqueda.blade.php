@@ -6,7 +6,7 @@
                 <option value="">-- Todos los modelos --</option>
                 @foreach($brands as $modelo)
                     <option value="{{ $modelo->id }}" {{ request('modelo_id') == $modelo->id ? 'selected' : '' }}>
-                        {{ $modelo->nombre }}
+                        {{ $modelo->descripcion }}
                     </option>
                 @endforeach
             </select>
