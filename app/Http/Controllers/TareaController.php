@@ -75,7 +75,7 @@ class TareaController extends Controller
     {
         $query = $request->input('query');
         $tareas = Tarea::with('user')
-            ->where('nombre', 'like', "%{$query}%")
+            ->where('servicio', 'like', "%{$query}%")
             ->orWhere('descripcion', 'like', "%{$query}%")
             ->get();
 

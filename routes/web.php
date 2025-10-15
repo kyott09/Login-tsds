@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,3 +118,10 @@ Route::get('/tareas/export/pdf', [App\Http\Controllers\TareaController::class, '
 
 Route::get('tareas/busqueda', [TareaController::class, 'busqueda'])->name('tareas.busqueda');
 Route::get('tareas/pdf', [TareaController::class, 'pdf'])->name('tareas.pdf');
+
+// ----------------------
+// Empleados
+// ----------------------
+Route::middleware(['auth'])->group(function(){
+    Route::resource('employees', EmployeeController::class);
+});

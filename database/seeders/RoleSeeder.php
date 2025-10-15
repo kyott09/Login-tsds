@@ -27,6 +27,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'borrar tarea']);
         Permission::create(['name' => 'ver admin']);
         Permission::create(['name' => 'ver user']);
+        Permission::create(['name' => 'ver empleado']);
+        Permission::create(['name' => 'crear empleado']);
+        Permission::create(['name' => 'editar empleado']);
+        Permission::create(['name' => 'borrar empleado']);
 
         // crear roles
         $admin = Role::create(['name' => 'admin']);
@@ -34,9 +38,14 @@ class RoleSeeder extends Seeder
         $cliente = Role::create(['name' => 'cliente']);
 
         // asignar permisos al rol admin
-        $admin->givePermissionTo(['ver user','ver vehiculos', 'crear vehiculos', 'editar vehiculos', 'borrar vehiculos', 'ver admin', 'ver tarea', 'crear tarea', 'editar tarea', 'borrar tarea']);
+        $admin->givePermissionTo([
+            'ver user','ver vehiculos', 'crear vehiculos', 'editar vehiculos', 'borrar vehiculos', 'ver admin', 'ver tarea', 'crear tarea', 'editar tarea', 'borrar tarea',
+            'ver empleado', 'crear empleado', 'editar empleado', 'borrar empleado'
+        ]);
         // asignar permisos al rol empleado
-        $empleado->givePermissionTo(['ver vehiculos','ver user','ver tarea']);
+        $empleado->givePermissionTo([
+            'ver vehiculos','ver user','ver tarea','ver empleado'
+        ]);
         // asignar permisos al rol cliente
         $cliente->givePermissionTo(['ver user']);
     }

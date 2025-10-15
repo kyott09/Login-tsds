@@ -196,12 +196,15 @@
                 </a>
               </li>
 
+              @can('ver empleado')
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('employees.index') }}" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Empleado</p>
                 </a>
               </li>
+              @endcan
+
               @can ('ver tarea')
               <li class="nav-item">
                 <a href="{{ route('tareas.index') }}" class="nav-link">
@@ -303,7 +306,7 @@
           <li class="nav-header">Informacion General</li>
           
           <li class="nav-item">
-            <a href="https://docs.google.com/document/d/1JC98Rt9nGGjNZfoviXGIm7WS6m19Nmp3SRO_4PRLAXc/edit?usp=sharing" class="nav-link">
+            <a href="https://docs.google.com/document/d/1JC98Rt9nGGjNZfoviXGIm7WS6m19Nmp3SRO_4PRLAXc/edit?usp=sharing" class="nav-link" target="_blank">
               <i class="nav-icon fas fa-file"></i>
               <p>Documentacion</p>
             </a>

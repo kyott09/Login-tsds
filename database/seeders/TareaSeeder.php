@@ -11,9 +11,8 @@ class TareaSeeder extends Seeder
 {
     public function run()
     {
-        // Asegurate de tener usuarios creados en la tabla users
-        $user = User::first(); // Toma el primer usuario
-        if (!$user) {
+        $users = User::all();
+        if ($users->isEmpty()) {
             $this->command->info('No hay usuarios en la tabla users. Por favor, crea usuarios primero.');
             return;
         }
@@ -29,10 +28,9 @@ class TareaSeeder extends Seeder
         ];
         $prioridades = ['premium', 'basico'];
 
-        // Crear solo 2 tareas
-        for ($i = 1; $i <= 2; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Tarea::create([
-                'user_id'        => $user->id,
+                'user_id'        => $users->random()->id,
                 'fecha_creacion' => Carbon::now()->subDays(rand(0, 10))->format('Y-m-d'),
                 'servicio'       => $servicios[array_rand($servicios)],
                 'prioridad'      => $prioridades[array_rand($prioridades)],
@@ -41,6 +39,6 @@ class TareaSeeder extends Seeder
             ]);
         }
 
-        $this->command->info('Se crearon 2 tareas de ejemplo correctamente.');
+        $this->command->info('Se crearon 10 tareas de ejemplo correctamente.');
     }
 }

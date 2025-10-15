@@ -10,7 +10,6 @@
 
     <div class="mb-3">
         <div class="btn-group" role="group" aria-label="Acciones">
-            <a href="{{ route('tareas.busqueda') }}" class="btn btn-secondary">Buscar Tareas</a>
             <a href="{{ route('tareas.pdf') }}" class="btn btn-danger">Exportar PDF</a>
             @can ('crear tarea')
             <a href="{{ route('tareas.create') }}" class="btn btn-primary">Nueva Tarea</a>
