@@ -44,7 +44,12 @@
 
     <div class="mb-3">
         <label for="estado_laboral" class="form-label">Estado Laboral</label>
-        <input type="text" name="estado_laboral" id="estado_laboral" class="form-control" value="{{ old('estado_laboral', optional($e)->estado_laboral) }}">
+        <select name="estado_laboral" id="estado_laboral" class="form-control">
+            <option value="">-- Seleccione estado --</option>
+            <option value="activo" {{ old('estado_laboral', optional($e)->estado_laboral) == 'activo' ? 'selected' : '' }}>Activo</option>
+            <option value="licencia" {{ old('estado_laboral', optional($e)->estado_laboral) == 'licencia' ? 'selected' : '' }}>Licencia</option>
+            <option value="inactivo" {{ old('estado_laboral', optional($e)->estado_laboral) == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+        </select>
         @error('estado_laboral')<div class="text-danger">{{ $message }}</div>@enderror
     </div>
 

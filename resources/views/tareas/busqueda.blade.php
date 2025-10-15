@@ -3,7 +3,14 @@
 @section('content')
 <div class="container">
     <h1>Buscar Tareas</h1>
+    <div class="mb-3">
+        <div class="btn-group" role="group" aria-label="Acciones">
+            <a href="{{ route('tareas.create') }}" class="btn btn-primary">Nueva Tarea</a>
+            <a href="{{ route('tareas.pdf') }}" class="btn btn-danger">Exportar PDF</a>
+        </div>
+    </div>
     <form action="{{ route('tareas.busqueda') }}" method="GET" class="mb-4">
+        {{-- Puedes agregar aquí filtros adicionales si lo necesitas --}}
     </form>
 
     @if(isset($tareas) && count($tareas) > 0)

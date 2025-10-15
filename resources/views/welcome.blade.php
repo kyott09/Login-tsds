@@ -28,17 +28,11 @@
             </div>
         </div>
         <div style="display:flex; gap:24px; justify-content:center; margin-bottom:32px;">
-            <a href="{{ route('login') }}" class="btn btn-warning btn-lg">
-                <button class="btn btn-warning btn-lg">
-                <i class="fas fa-user-tie">
-            <span style="font-family: 'Courier New', monospace;">Sección Empleados</span>
-            </i>
-                </button>
-            </a>
+
               <a href="{{ route('logincustomer') }}" class="btn btn-primary btn-lg">
     <button class="btn btn-primary btn-lg">
         <i class="fas fa-user">
-            <span style="font-family: 'Courier New', monospace;">Sección Clientes</span>
+            <span style="font-family: 'Courier New', monospace;">Iniciar Sesion</span>
         </i>
     </button>
 </a>

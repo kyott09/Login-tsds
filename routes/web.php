@@ -122,6 +122,8 @@ Route::get('tareas/pdf', [TareaController::class, 'pdf'])->name('tareas.pdf');
 // ----------------------
 // Empleados
 // ----------------------
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'permission:ver empleado'])->group(function () {
+    Route::get('employees/busqueda', [EmployeeController::class, 'busqueda'])->name('employees.busqueda');
+    Route::get('employees/pdf', [EmployeeController::class, 'pdf'])->name('employees.pdf');
     Route::resource('employees', EmployeeController::class);
 });

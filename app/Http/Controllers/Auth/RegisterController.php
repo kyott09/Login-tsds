@@ -42,7 +42,7 @@ class RegisterController extends Controller
         ]);
 
         // asignar automáticamente el rol "empleado"
-        $user->assignRole('empleado');
+        $user->assignRole('cliente');
 
         event(new Registered($user));
 

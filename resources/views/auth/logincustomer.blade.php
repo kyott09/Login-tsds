@@ -95,7 +95,7 @@
         <a href="forgot-password.html">Olvidé mi contraseña</a>
       </p>
       <p class="mb-0">
-        <a href="{{ route('registercustomer') }}" class="text-center">Registrar nueva cuenta</a>
+        <a href="{{ route('register') }}" class="text-center">Registrar nueva cuenta</a>
       </p>
     </div>
     <!-- /.card-body -->

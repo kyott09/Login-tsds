@@ -8,6 +8,9 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Barryvdh\DomPDF\facades\PDF;
+
+
 
 class EmployeeController extends Controller
 {
@@ -55,5 +58,18 @@ class EmployeeController extends Controller
     {
         $employee->delete();
         return redirect()->route('employees.index')->with('success','Empleado eliminado correctamente.');
+    }
+
+    public function busqueda(Request $request)
+    {
+        $employees = \App\Models\Employee::with(['user','vehicle'])->get();
+        return view('employees.busqueda', compact('employees'));
+    }
+
+    public function pdf()
+    {
+        $employees = \App\Models\Employee::with(['user','vehicle'])->get();
+        $pdf = \PDF::loadView('employees.pdf', compact('employees'));
+        return $pdf->download('empleados.pdf');
     }
 }
