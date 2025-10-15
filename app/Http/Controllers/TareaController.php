@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tarea;
-use App\Models\User; // <- ahora usamos User
+use App\Models\User;
 use App\Http\Requests\StoreTareaRequest;
 use App\Http\Requests\UpdateTareaRequest;
+use Illuminate\Http\Request;
+use PDF;
 
 class TareaController extends Controller
 {
@@ -66,5 +68,25 @@ class TareaController extends Controller
     {
         $tarea->delete();
         return redirect()->route('tareas.index')->with('success', 'Tarea eliminada exitosamente.');
+    }
+
+    // Método para la búsqueda de tareas
+    public function busqueda(Request $request)
+    {
+        $query = $request->input('query');
+        $tareas = Tarea::with('user')
+            ->where('nombre', 'like', "%{$query}%")
+            ->orWhere('descripcion', 'like', "%{$query}%")
+            ->get();
+
+        return view('tareas.busqueda', compact('tareas', 'query'));
+    }
+
+    // Método para exportar tareas a PDF
+    public function pdf()
+    {
+        $tareas = Tarea::with('user')->get();
+        $pdf = \PDF::loadView('tareas.pdf', compact('tareas'));
+        return $pdf->download('tareas.pdf');
     }
 }

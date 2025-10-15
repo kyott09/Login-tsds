@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\TareaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,9 +108,12 @@ Route::put('/vehiculos/{vehiculo}', [VehicleController::class, 'update'])->name(
 Route::delete('/vehiculos/{vehiculo}', [VehicleController::class, 'destroy'])->name('vehiculos.destroy')
     ->middleware('permission:borrar vehiculos');
 
-// ----------------------
-// Empleados
-// ----------------------
 
 Route::get('/vehiculos/export/pdf', [App\Http\Controllers\VehicleController::class, 'exportPDF'])
     ->name('vehiculos.exportPdf');
+
+Route::get('/tareas/export/pdf', [App\Http\Controllers\TareaController::class, 'exportPDF'])
+    ->name('tareas.exportPdf');
+
+Route::get('tareas/busqueda', [TareaController::class, 'busqueda'])->name('tareas.busqueda');
+Route::get('tareas/pdf', [TareaController::class, 'pdf'])->name('tareas.pdf');
