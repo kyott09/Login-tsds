@@ -53,7 +53,7 @@
       </li>
       -->
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="https://www.canva.com/design/DAG1_f59X08/hPruPsav-8wcMWSKifN2-w/edit?utm_content=DAG1_f59X08&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" class="nav-link" target="_blank">Contact</a>
       </li>
     </ul>
 
@@ -61,9 +61,7 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item d-flex align-items-center">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
+
         <!-- Miniatura de usuario -->
         <div class="dropdown" title="{{ Auth::user()->email }}">
           <a href="#" class="nav-link p-0 ml-2" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:flex;align-items:center;">
@@ -125,14 +123,7 @@
 
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
 
-          </div>
-        </div>
-      </div>
     @can ('ver user')
       <!-- Sidebar Menu -->
       <nav class="mt-2">

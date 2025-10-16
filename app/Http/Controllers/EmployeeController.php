@@ -16,9 +16,16 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with(['user','vehicle'])->paginate(15);
-        return view('employees.index', compact('employees'));
+        // Obtener empleados con relaciones
+        $employees = Employee::with(['user', 'vehicle'])->paginate(15);
+
+        // Obtener datos para el select de edición
+        $users = User::all();       // Para el modal Editar
+        $vehicles = Vehicle::all(); // Para el modal Editar
+
+        return view('employees.index', compact('employees', 'users', 'vehicles'));
     }
+
 
     public function create()
     {
