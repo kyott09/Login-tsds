@@ -189,12 +189,7 @@
                 </li>
               @endcan
 
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>Orden de Trabajo</p>
-                </a>
-              </li>
+
 
               @can('ver empleado')
               <li class="nav-item">
@@ -239,12 +234,7 @@
                   <p>Tarea</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
-                  <i class="far fa-gem nav-icon"></i>
-                  <p>Tarea Prioritaria</p>
-                </a>
-               </li>  
+              
             </ul>   
           </li>
 
@@ -259,10 +249,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
+            <a href="{{ route('gallery.index')}}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
-                Gallery
+                Galeria de Fotos
               </p>
             </a>
           </li>

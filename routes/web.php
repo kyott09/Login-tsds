@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,3 +129,7 @@ Route::middleware(['auth', 'permission:ver empleado'])->group(function () {
     Route::resource('employees', EmployeeController::class);
 });
 
+Route::resource('gallery', App\Http\Controllers\GalleryController::class);
+
+
+Route::resource('gallery', GalleryController::class);
