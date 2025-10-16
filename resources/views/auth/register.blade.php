@@ -6,8 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Plug1n | Registro</title>
 
-  <!-- Estilos personalizados para posicionar y achicar el logo -->
+  <!-- Estilos personalizados -->
   <style>
+    body {
+      background-color: #edf0f3;
+    }
+
+    /* Flecha arriba a la izquierda */
     .top-left-logo {
       position: absolute;
       top: 15px;
@@ -20,6 +25,44 @@
       width: 40px;
       height: auto;
     }
+
+    /* Contenedor principal */
+    .login-box {
+      width: 400px;
+      margin: 0 auto;
+    }
+
+    /* Ajuste del logo central */
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: -30px;
+      margin-top: -20px;
+    }
+
+    .login-logo img {
+      width: 180px;
+      height: auto;
+      opacity: 0.95;
+      object-fit: contain;
+    }
+
+    /* Tarjeta del formulario */
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    /* Botón registrar */
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
   </style>
 
   <!-- Google Font: Source Sans Pro -->
@@ -31,22 +74,20 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 </head>
+
 <body class="hold-transition register-page">
 
-  <div class="login-box">
-    <!-- Logo -->
-    <div class="login-logo">
-      <div style="display: flex; justify-content: center; align-items: center;">
-        <img src="{{ asset('dist/img/plugin logo.png') }}" 
-             alt="Logo"
-             style="opacity: .9; width: 260px; height: 220px; margin-bottom: -80px; margin-top: -70px;">
-      </div>
-    </div>
+  <!-- Flecha a Home -->
+  <a href="{{ url('/') }}" class="top-left-logo">
+    <img src="{{ asset('dist/img/flecha.png') }}" alt="Logo Home">
+  </a>
 
-    <!-- Logo clickeable hacia home -->
-    <a href="{{ url('/') }}" class="top-left-logo">
-      <img src="{{ asset('dist/img/flecha.png') }}" alt="Logo Home">
-    </a>
+  <div class="login-box">
+
+    <!-- Logo central -->
+    <div class="login-logo">
+      <img src="{{ asset('dist/img/lugin.png') }}" alt="Logo">
+    </div>
 
     <!-- Formulario -->
     <div class="card">
@@ -58,8 +99,7 @@
 
           <!-- Usuario -->
           <div class="input-group mb-3">
-            <input id="user" type="text"
-                   class="form-control @error('user') is-invalid @enderror"
+            <input id="user" type="text" class="form-control @error('user') is-invalid @enderror"
                    name="user" value="{{ old('user') }}" required autocomplete="username"
                    placeholder="Usuario">
             <div class="input-group-append">
@@ -72,9 +112,8 @@
 
           <!-- Nombre -->
           <div class="input-group mb-3">
-            <input id="name" type="text" 
-                   class="form-control @error('name') is-invalid @enderror" 
-                   name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
+            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                   name="name" value="{{ old('name') }}" required autocomplete="name"
                    placeholder="Nombre completo">
             <div class="input-group-append">
               <div class="input-group-text"><span class="fas fa-user"></span></div>
@@ -86,8 +125,7 @@
 
           <!-- Email -->
           <div class="input-group mb-3">
-            <input id="email" type="email" 
-                   class="form-control @error('email') is-invalid @enderror" 
+            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                    name="email" value="{{ old('email') }}" required autocomplete="email"
                    placeholder="Email">
             <div class="input-group-append">
@@ -100,8 +138,7 @@
 
           <!-- Contraseña -->
           <div class="input-group mb-3">
-            <input id="password" type="password" 
-                   class="form-control @error('password') is-invalid @enderror" 
+            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
                    name="password" required autocomplete="new-password"
                    placeholder="Contraseña">
             <div class="input-group-append">
@@ -114,8 +151,7 @@
 
           <!-- Confirmar contraseña -->
           <div class="input-group mb-3">
-            <input id="password-confirm" type="password" 
-                   class="form-control" 
+            <input id="password-confirm" type="password" class="form-control"
                    name="password_confirmation" required autocomplete="new-password"
                    placeholder="Confirmar contraseña">
             <div class="input-group-append">
@@ -131,7 +167,7 @@
         </form>
 
         <div class="d-flex justify-content-center mt-3">
-          <a href="{{ route('login') }}" class="text-center">Ya tengo una cuenta</a>
+          <a href="{{ route('logincustomer') }}" class="text-center">Ya tengo una cuenta</a>
         </div>
 
       </div>

@@ -85,15 +85,11 @@
       </form>
 
       <div class="social-auth-links text-center mt-2 mb-3">
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Ingresar con Google+
-        </a>
+
       </div>
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
-        <a href="forgot-password.html">Olvidé mi contraseña</a>
-      </p>
+
       <p class="mb-0">
         <a href="{{ route('register') }}" class="text-center">Registrar nueva cuenta</a>
       </p>

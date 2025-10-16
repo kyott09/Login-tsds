@@ -58,6 +58,7 @@
                                 <th>Color</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
+                                <th>Fecha Creación</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,6 +86,7 @@
                                             </form>
                                         @endcan
                                     </td>
+                                    <td>{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}</td>
                                 </tr>
                                 @include('vehicle.modal_delete')
                             @endforeach
@@ -110,7 +112,7 @@ $(document).ready(function() {
                 "previous": "Anterior"
             },
             "lengthMenu": "Mostrar <select>" +
-                '<option value="5">5</option>' +
+                '<option value="6">6</option>' +
                 '<option value="10">10</option>' +
                 "<select> registros",
             "loadingRecords": "Cargando...",

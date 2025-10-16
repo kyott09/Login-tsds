@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Vehicle;
+use Illuminate\Support\Carbon;
 
 class VehicleSeeder extends Seeder
 {
@@ -62,7 +63,17 @@ class VehicleSeeder extends Seeder
         ];
 
         foreach ($vehicles as $vehicle) {
-            Vehicle::create($vehicle);
+            // Generar fecha aleatoria en octubre de 2025
+            $day = rand(1, 31); // Día del mes
+            $hour = rand(0, 23);
+            $minute = rand(0, 59);
+            $second = rand(0, 59);
+            $randomDate = Carbon::create(2025, 10, $day, $hour, $minute, $second);
+
+            Vehicle::create(array_merge($vehicle, [
+                'created_at' => $randomDate,
+                'updated_at' => $randomDate,
+            ]));
         }
     }
 }
