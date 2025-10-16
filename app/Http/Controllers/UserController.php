@@ -37,7 +37,7 @@ class UserController extends Controller
             'address' => $request->address,
         ]);
 
-        // Subir imagen si existe (código que me pasaste)
+        // Subir imagen si existe
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
             $filename = time() . '_' . $file->getClientOriginalName();

@@ -38,7 +38,7 @@
                                 class="rounded-circle border" 
                                 style="width:120px; height:120px; object-fit:cover;">
 
-                            <div class="mt-2">
+                            <div class="mt-4">
                                 <label for="profile_image" class="form-label">Cambiar Imagen</label>
                                 <input type="file" id="profile_image" name="profile_image" class="form-control form-control-sm">
                             </div>
@@ -53,24 +53,24 @@
 
                         {{-- Email --}}
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <label for="email" class="form-label">Correo electrónico</label>
                             <input type="email" id="email" name="email" class="form-control" 
                                    value="{{ auth()->user()->email }}" required>
                         </div>
 
                         {{-- Teléfono --}}
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Número de Teléfono</label>
+                            <label for="phone" class="form-label">Teléfono</label>
                             <input type="text" id="phone" name="phone" class="form-control"
                                    value="{{ auth()->user()->phone ?? '' }}">
                         </div>
 
-                        {{-- Fecha de nacimiento --}}
                         <div class="mb-3">
-                            <label for="birthdate" class="form-label">Fecha de Nacimiento</label>
+                            <label for="birthdate" class="form-label">Fecha de nacimiento</label>
                             <input type="date" id="birthdate" name="birthdate" class="form-control"
-                                   value="{{ auth()->user()->birthdate ?? '' }}">
+                                value="{{ $user->birthdate ? $user->birthdate->format('Y-m-d') : '' }}">
                         </div>
+
 
                         {{-- Dirección --}}
                         <div class="mb-3">

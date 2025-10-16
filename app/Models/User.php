@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'user',           // <--- agregamos este campo
+        'user',
         'email',
         'password',
         'profile_image',
@@ -31,6 +31,6 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthdate' => 'date',
+        'birthdate' => 'date', // <-- Esto permite usar ->format('Y-m-d') en la vista
     ];
 }

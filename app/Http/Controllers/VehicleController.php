@@ -30,6 +30,9 @@ class VehicleController extends Controller
 
         $vehiculos = $vehiculos->orderBy('created_at', 'desc')->get();
 
+        // Traemos los modelos para el select del modal de edición
+        $modelos = VehicleModel::with('brand')->get();
+
         if ($request->has('pdf')) {
             return $this->exportPDF($request);
         }
@@ -37,11 +40,13 @@ class VehicleController extends Controller
         return view('vehicle.index', [
             'vehiculos' => $vehiculos,
             'brands' => $brands,
+            'modelos' => $modelos, // <-- agregamos modelos
             'modelo_id' => $request->modelo_id,
             'desde' => $request->desde,
             'hasta' => $request->hasta,
         ]);
     }
+
 
 
 

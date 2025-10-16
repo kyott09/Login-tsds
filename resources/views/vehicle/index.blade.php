@@ -21,7 +21,6 @@
                             {{-- Botones de acción --}}
                             <div class="form-group col-md-3 d-flex align-items-end">
                                 <div class="btn-group" role="group" aria-label="Acciones">
-
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-search"></i> Buscar
                                     </button>
@@ -37,7 +36,6 @@
                                     <a href="{{ route('vehiculos.index') }}" class="btn btn-secondary">
                                         <i class="fas fa-eraser"></i> Limpiar
                                     </a>
-
                                 </div>
                             </div>
                         </div>
@@ -76,19 +74,25 @@
                                     <td>{{ ucfirst($vehiculo->estado) }}</td>
                                     <td>
                                         @can('editar vehiculos')
-                                            <a href="{{ route('vehiculos.edit', $vehiculo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                            <button type="button" class="btn btn-warning btn-sm editBtn"
+                                                data-id="{{ $vehiculo->id }}"
+                                                data-patente="{{ $vehiculo->patente }}"
+                                                data-color="{{ $vehiculo->color }}"
+                                                data-modelo_id="{{ $vehiculo->modelo_id }}"
+                                                data-estado="{{ $vehiculo->estado }}">
+                                                Editar
+                                            </button>
                                         @endcan
                                         @can('borrar vehiculos')
-                                            <form action="{{ route('vehiculos.destroy', $vehiculo->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro de eliminar?')">Eliminar</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm deleteBtn"
+                                                data-id="{{ $vehiculo->id }}"
+                                                data-patente="{{ $vehiculo->patente }}">
+                                                Eliminar
+                                            </button>
                                         @endcan
                                     </td>
                                     <td>{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}</td>
                                 </tr>
-                                @include('vehicle.modal_delete')
                             @endforeach
                         </tbody>
                     </table>
@@ -98,11 +102,81 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Editar --}}
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editForm" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title">Editar Vehículo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Patente</label>
+                        <input type="text" name="patente" id="editPatente" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Color</label>
+                        <input type="text" name="color" id="editColor" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Modelo</label>
+                        <select name="modelo_id" id="editModelo" class="form-control">
+                            @foreach($modelos as $modelo)
+                                <option value="{{ $modelo->id }}">{{ $modelo->descripcion }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Estado</label>
+                        <select name="estado" id="editEstado" class="form-control">
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-warning">Guardar cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Modal Eliminar --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="deleteForm" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro que deseas eliminar el vehículo <strong id="deletePatente"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
 <script>
 $(document).ready(function() {
+    // Inicializar DataTable
     $('#tablaDetalle').DataTable({
         "language": {
             "info": "_TOTAL_ registros",
@@ -122,6 +196,26 @@ $(document).ready(function() {
             "infoEmpty": "",
             "infoFiltered": ""
         }
+    });
+
+    // Botón Editar
+    $('.editBtn').on('click', function() {
+        let id = $(this).data('id');
+        $('#editPatente').val($(this).data('patente'));
+        $('#editColor').val($(this).data('color'));
+        $('#editModelo').val($(this).data('modelo_id'));
+        $('#editEstado').val($(this).data('estado'));
+        $('#editForm').attr('action', '/vehiculos/' + id);
+        $('#editModal').modal('show');
+    });
+
+    // Botón Eliminar
+    $('.deleteBtn').on('click', function() {
+        let id = $(this).data('id');
+        let patente = $(this).data('patente');
+        $('#deletePatente').text(patente);
+        $('#deleteForm').attr('action', '/vehiculos/' + id);
+        $('#deleteModal').modal('show');
     });
 });
 </script>

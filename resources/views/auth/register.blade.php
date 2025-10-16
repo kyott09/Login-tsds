@@ -92,7 +92,6 @@
     <!-- Formulario -->
     <div class="card">
       <div class="card-body register-card-body">
-        <p class="login-box-msg">Registrar Usuario</p>
 
         <form method="POST" action="{{ route('register') }}">
           @csrf
@@ -142,7 +141,9 @@
                    name="password" required autocomplete="new-password"
                    placeholder="Contraseña">
             <div class="input-group-append">
-              <div class="input-group-text"><span class="fas fa-lock"></span></div>
+              <div class="input-group-text">
+                <span id="togglePassword" class="fas fa-eye" style="cursor:pointer;"></span>
+              </div>
             </div>
             @error('password')
               <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>
@@ -155,13 +156,15 @@
                    name="password_confirmation" required autocomplete="new-password"
                    placeholder="Confirmar contraseña">
             <div class="input-group-append">
-              <div class="input-group-text"><span class="fas fa-lock"></span></div>
+              <div class="input-group-text">
+                <span id="togglePasswordConfirm" class="fas fa-eye" style="cursor:pointer;"></span>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12 d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary btn-block w-50">Registrar</button>
+              <button type="submit" class="btn btn-primary btn-block w-50">Registrarme</button>
             </div>
           </div>
         </form>
@@ -178,6 +181,39 @@
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+
+  <!-- Script para mostrar/ocultar contraseñas -->
+  <script>
+    // Mostrar/ocultar contraseña principal
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('password');
+      const icon = this;
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+
+    // Mostrar/ocultar confirmación de contraseña
+    document.getElementById('togglePasswordConfirm').addEventListener('click', function () {
+      const passwordConfirmInput = document.getElementById('password-confirm');
+      const icon = this;
+      if (passwordConfirmInput.type === 'password') {
+        passwordConfirmInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordConfirmInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  </script>
 
 </body>
 </html>
