@@ -111,14 +111,14 @@ class VehicleController extends Controller
 
         $vehiculo->update($request->all());
 
-        return redirect()->route('vehicle.index')
+        return redirect()->route('vehiculos.index')
             ->with('success', 'Vehículo actualizado exitosamente');
     }
 
     public function destroy(Vehicle $vehiculo)
     {
         $vehiculo->delete();
-        return redirect()->route('vehicle.index')
+        return redirect()->route('vehiculos.index')
             ->with('success', 'Vehículo eliminado exitosamente');
     }
 

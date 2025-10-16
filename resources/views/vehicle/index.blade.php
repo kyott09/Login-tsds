@@ -86,6 +86,7 @@
                                         @endcan
                                     </td>
                                 </tr>
+                                @include('vehicle.modal_delete')
                             @endforeach
                         </tbody>
                     </table>

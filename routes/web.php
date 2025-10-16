@@ -127,3 +127,4 @@ Route::middleware(['auth', 'permission:ver empleado'])->group(function () {
     Route::get('employees/pdf', [EmployeeController::class, 'pdf'])->name('employees.pdf');
     Route::resource('employees', EmployeeController::class);
 });
+
