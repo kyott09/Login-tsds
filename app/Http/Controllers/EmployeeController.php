@@ -69,8 +69,13 @@ class EmployeeController extends Controller
 
     public function busqueda(Request $request)
     {
-        $employees = \App\Models\Employee::with(['user','vehicle'])->get();
-        return view('employees.busqueda', compact('employees'));
+        $employees = Employee::with(['user','vehicle'])->get();
+
+        // Traer datos para modal de edición
+        $users = User::all();
+        $vehicles = Vehicle::all();
+
+        return view('employees.busqueda', compact('employees','users','vehicles'));
     }
 
     public function pdf()

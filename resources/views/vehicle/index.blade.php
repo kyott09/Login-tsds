@@ -90,6 +90,19 @@
                                                 Eliminar
                                             </button>
                                         @endcan
+                                         @can('ver vehiculos')
+                                            <button type="button" class="btn btn-info btn-sm verBtn"
+                                                data-id="{{ $vehiculo->id }}"
+                                                data-patente="{{ $vehiculo->patente }}"
+                                                data-modelo="{{ $vehiculo->modelo->descripcion ?? 'Sin modelo' }}"
+                                                data-marca="{{ $vehiculo->modelo && $vehiculo->modelo->brand ? $vehiculo->modelo->brand->descripcion : '-' }}"
+                                                data-color="{{ $vehiculo->color }}"
+                                                data-estado="{{ ucfirst($vehiculo->estado) }}"
+                                                data-fecha="{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}">
+                                                Ver
+                                            </button>
+                                        @endcan
+
                                     </td>
                                     <td>{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}</td>
                                 </tr>
@@ -102,75 +115,7 @@
         </div>
     </div>
 </div>
-
-{{-- Modal Editar --}}
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="editForm" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title">Editar Vehículo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label>Patente</label>
-                        <input type="text" name="patente" id="editPatente" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label>Color</label>
-                        <input type="text" name="color" id="editColor" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label>Modelo</label>
-                        <select name="modelo_id" id="editModelo" class="form-control">
-                            @foreach($modelos as $modelo)
-                                <option value="{{ $modelo->id }}">{{ $modelo->descripcion }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Estado</label>
-                        <select name="estado" id="editEstado" class="form-control">
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Inactivo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-warning">Guardar cambios</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-{{-- Modal Eliminar --}}
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form id="deleteForm" method="POST">
-            @csrf
-            @method('DELETE')
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estás seguro que deseas eliminar el vehículo <strong id="deletePatente"></strong>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
+@include('vehicle.modals')
 @endsection
 
 @push('scripts')
@@ -217,6 +162,19 @@ $(document).ready(function() {
         $('#deleteForm').attr('action', '/vehiculos/' + id);
         $('#deleteModal').modal('show');
     });
+    // Botón Ver
+    // Botón Ver
+    $('.verBtn').on('click', function() {
+        $('#verId').text($(this).data('id'));
+        $('#verPatente').text($(this).data('patente'));
+        $('#verModelo').text($(this).data('modelo'));
+        $('#verMarca').text($(this).data('marca'));
+        $('#verColor').text($(this).data('color'));
+        $('#verEstado').text($(this).data('estado'));
+        $('#verFecha').text($(this).data('fecha'));
+        $('#verModal').modal('show');
+    });
+
 });
 </script>
 @endpush
