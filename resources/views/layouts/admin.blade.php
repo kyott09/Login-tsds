@@ -227,7 +227,7 @@
           <li class="nav-item">
             <a href="https://docs.google.com/document/d/1JC98Rt9nGGjNZfoviXGIm7WS6m19Nmp3SRO_4PRLAXc/edit?usp=sharing" class="nav-link" target="_blank">
               <i class="nav-icon fas fa-file"></i>
-              <p>Documentacion</p>
+              <p>Documentación</p>
             </a>
           </li>
           </li>

@@ -38,7 +38,6 @@
                                 class="rounded-circle border mb-3" 
                                 style="width:120px; height:120px; object-fit:cover;">
 
-                            <label for="profile_image" class="form-label fw-bold d-block">Cambiar Imagen</label>
 
                             {{-- Botón personalizado para subir imagen --}}
                             <div class="custom-file-upload mx-auto" style="max-width: 320px;">
