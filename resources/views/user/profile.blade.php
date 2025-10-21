@@ -35,12 +35,21 @@
                         <div class="mb-4 text-center">
                             <img src="{{ auth()->user()->profile_image ? asset('img/users_profile/' . auth()->user()->profile_image) : asset('default-avatar.png') }}" 
                                 alt="Imagen de Perfil" 
-                                class="rounded-circle border" 
+                                class="rounded-circle border mb-3" 
                                 style="width:120px; height:120px; object-fit:cover;">
 
-                            <div class="mt-4">
-                                <label for="profile_image" class="form-label">Cambiar Imagen</label>
-                                <input type="file" id="profile_image" name="profile_image" class="form-control form-control-sm">
+                            <label for="profile_image" class="form-label fw-bold d-block">Cambiar Imagen</label>
+
+                            {{-- Botón personalizado para subir imagen --}}
+                            <div class="custom-file-upload mx-auto" style="max-width: 320px;">
+                                <label for="profile_image" class="btn btn-primary w-100">
+                                    <i class="bi bi-upload"></i> Subir imagen
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="profile_image" 
+                                    name="profile_image" 
+                                    class="form-control form-control-sm d-none">
                             </div>
                         </div>
 
@@ -65,12 +74,12 @@
                                    value="{{ auth()->user()->phone ?? '' }}">
                         </div>
 
+                        {{-- Fecha de nacimiento --}}
                         <div class="mb-3">
                             <label for="birthdate" class="form-label">Fecha de nacimiento</label>
                             <input type="date" id="birthdate" name="birthdate" class="form-control"
                                 value="{{ $user->birthdate ? $user->birthdate->format('Y-m-d') : '' }}">
                         </div>
-
 
                         {{-- Dirección --}}
                         <div class="mb-3">
@@ -90,4 +99,29 @@
         </div>
     </div>
 </div>
+
+{{-- Estilos personalizados --}}
+<style>
+    /* Centrar y mejorar visual del input file */
+    .custom-file-upload label {
+        cursor: pointer;
+        padding: 8px 12px;
+        font-weight: 500;
+    }
+
+    /* Oculta el input original */
+    .custom-file-upload input[type="file"] {
+        display: none;
+    }
+
+    /* Efecto hover */
+    .custom-file-upload label:hover {
+        background-color: #0b5ed7;
+    }
+
+    /* Ícono de Bootstrap opcional */
+    .bi-upload {
+        margin-right: 6px;
+    }
+</style>
 @endsection
