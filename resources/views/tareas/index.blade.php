@@ -88,7 +88,8 @@
             @foreach($tareas as $tarea)
                 <tr>
                     <td>{{ $tarea->id }}</td>
-                    {{-- Nombre del cliente (User) --}}
+
+                    {{-- Cliente --}}
                     <td>
                         @if($tarea->user)
                             {{ $tarea->user->name }} ({{ $tarea->user->email }})
@@ -96,20 +97,61 @@
                             <em>Sin cliente</em>
                         @endif
                     </td>
+
                     {{-- Servicio --}}
                     <td>{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}</td>
+
                     {{-- Prioridad --}}
                     <td>{{ ucfirst($tarea->prioridad) }}</td>
-                    {{-- Fecha de creación --}}
+
+                    {{-- Fecha --}}
                     <td>{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}</td>
+
                     {{-- Estado --}}
                     <td>{{ ucfirst($tarea->estado) }}</td>
+
                     {{-- Acciones --}}
-                    <td>
-                        @can ('editar tarea')
-                        <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-sm btn-warning">Editar</a>
-                        <!-- Botón eliminar opcional -->
-                        @endcan
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+
+                            {{-- Botón Ver --}}
+                            <button type="button"
+                                class="btn btn-info btn-sm verBtn"
+                                data-id="{{ $tarea->id }}"
+                                data-cliente="{{ $tarea->user->name ?? 'Sin cliente' }}"
+                                data-servicio="{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}"
+                                data-prioridad="{{ ucfirst($tarea->prioridad) }}"
+                                data-fecha="{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}"
+                                data-estado="{{ ucfirst($tarea->estado) }}">
+                                Ver
+                            </button>
+
+                            {{-- Botón Editar --}}
+                            @can('editar tarea')
+                            <button type="button"
+                                class="btn btn-warning btn-sm editBtn"
+                                data-id="{{ $tarea->id }}"
+                                data-cliente_id="{{ $tarea->user_id }}"
+                                data-servicio="{{ $tarea->servicio }}"
+                                data-prioridad="{{ $tarea->prioridad }}"
+                                data-fecha_raw="{{ $tarea->fecha_creacion }}"
+                                data-estado="{{ $tarea->estado }}">
+                                Editar
+                            </button>
+                            @endcan
+
+                            {{-- Botón Eliminar --}}
+                            @can('eliminar tarea')
+                            <button type="button"
+                                class="btn btn-danger btn-sm deleteBtn"
+                                data-id="{{ $tarea->id }}"
+                                data-servicio="{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}"
+                                data-cliente="{{ $tarea->user->name ?? 'Sin cliente' }}">
+                                Eliminar
+                            </button>
+                            @endcan
+
+                        </div>
                     </td>
                 </tr>
             @endforeach
@@ -117,9 +159,45 @@
     </table>
 </div>
 @endsection
-
+@include('tareas.modals')
 @push('scripts')
 <script>
+$(document).ready(function() {
+
+    // Modal Ver
+    $('.verBtn').on('click', function() {
+        $('#verId').text($(this).data('id'));
+        $('#verCliente').text($(this).data('cliente'));
+        $('#verServicio').text($(this).data('servicio'));
+        $('#verPrioridad').text($(this).data('prioridad'));
+        $('#verFecha').text($(this).data('fecha'));
+        $('#verEstado').text($(this).data('estado'));
+        $('#verModal').modal('show');
+    });
+
+    // Modal Editar
+    $('.editBtn').on('click', function() {
+        let id = $(this).data('id');
+        $('#editForm').attr('action', '/tareas/' + id);
+        $('#editCliente').val($(this).data('cliente_id'));
+        $('#editServicio').val($(this).data('servicio'));
+        $('#editPrioridad').val($(this).data('prioridad'));
+        $('#editFecha').val($(this).data('fecha_raw'));
+        $('#editEstado').val($(this).data('estado'));
+        $('#editModal').modal('show');
+    });
+
+    // Modal Eliminar
+    $('.deleteBtn').on('click', function() {
+        let id = $(this).data('id');
+        $('#deleteServicio').text($(this).data('servicio'));
+        $('#deleteCliente').text($(this).data('cliente'));
+        $('#deleteForm').attr('action', '/tareas/' + id);
+        $('#deleteModal').modal('show');
+    });
+});
+
+
 $(document).ready(function() {
     var table = $('#tablaDetalle').DataTable({
         "language":{

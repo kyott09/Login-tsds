@@ -13,9 +13,11 @@ class TareaController extends Controller
 {
     public function index()
     {
-        $tareas = \App\Models\Tarea::with('user')->get();
-        return view('tareas.index', compact('tareas'));
+        $tareas = Tarea::with('user')->get();
+        $usuarios = User::orderBy('name')->get(); // 🔹 Agregado
+        return view('tareas.index', compact('tareas', 'usuarios')); // 🔹 Pasamos la variable a la vista
     }
+
 
 
     public function create()
