@@ -8,6 +8,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    @can('ABM_EMPLEADOS')
     <div class="mb-3">
         <div class="btn-group" role="group" aria-label="Acciones">
             <a href="{{ route('employees.create') }}" class="btn btn-primary">Crear Empleado</a>
@@ -15,7 +16,7 @@
             <a href="{{ route('employees.pdf') }}" class="btn btn-danger">Exportar PDF</a>
         </div>
     </div>
-
+    @endcan
     <table class="table table-bordered" id="tablaEmpleados">
         <thead>
             <tr>
@@ -36,6 +37,7 @@
                 <td>{{ optional($e->fecha_ingreso)->format('Y-m-d') }}</td>
                 <td>{{ $e->estado_laboral }}</td>
                 <td>
+                    @can('ver empleado')
                     <button class="btn btn-info btn-sm verBtn"
                         data-usuario="{{ $e->user ? $e->user->name : '-' }}"
                         data-email="{{ $e->user ? $e->user->email : '-' }}"
@@ -44,7 +46,8 @@
                         data-estado="{{ $e->estado_laboral }}">
                         Ver
                     </button>
-
+                    @endcan
+                    @can('editar empleado')
                     <button class="btn btn-warning btn-sm editBtn"
                         data-id="{{ $e->id }}"
                         data-usuario="{{ $e->user_id }}"
@@ -53,12 +56,14 @@
                         data-estado="{{ $e->estado_laboral }}">
                         Editar
                     </button>
-
+                    @endcan
+                    @can('borrar empleado')
                     <button class="btn btn-danger btn-sm deleteBtn"
                         data-id="{{ $e->id }}"
                         data-usuario="{{ $e->user ? $e->user->name : '-' }}">
                         Eliminar
                     </button>
+                    @endcan
                 </td>
             </tr>
         @endforeach
