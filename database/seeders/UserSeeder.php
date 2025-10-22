@@ -39,9 +39,9 @@ class UserSeeder extends Seeder
 
         // Usuario cliente 2
         $cliente2 = User::create([
-            'name' => 'Martina',
-            'email' => 'martina@contratista.com',
-            'password' => Hash::make('11223344'),
+            'name' => 'alejandro',
+            'email' => 'ale@contratista.com',
+            'password' => Hash::make('09122018'),
             'prioridad' => 'basico',
         ]);
         $cliente2->assignRole('cliente');

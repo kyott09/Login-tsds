@@ -24,13 +24,12 @@
                             <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">Seleccione un usuario</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">
+                                    <option value="{{ $user->id }}" data-prioridad="{{ $user->prioridad }}">
                                         {{ $user->name }} - {{ $user->email }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
 
                         <!-- Teléfono y Dirección del Cliente (opcional si querés mostrar) -->
                         {{-- 
@@ -72,14 +71,11 @@
                             </select>
                         </div>
 
-                        <!-- Prioridad -->
+                        <!-- Prioridad (solo lectura) -->
                         <div class="form-group mb-4">
-                            <label for="prioridad">Prioridad</label>
-                            <select class="form-control" id="prioridad" name="prioridad" required>
-                                <option value="">Seleccione prioridad</option>
-                                <option value="premium">Premium</option>
-                                <option value="basico">Básico</option>
-                            </select>
+                            <label>Prioridad</label>
+                            <p id="prioridad_text" class="form-control" style="background-color: #e9ecef; cursor: not-allowed;"></p>
+                            <input type="hidden" id="prioridad" name="prioridad">
                         </div>
 
                         <!-- Estado -->
@@ -101,4 +97,18 @@
         </div>
     </div>
 </div>
+
+<!-- Script para mostrar la prioridad según usuario -->
+<script>
+    const userSelect = document.getElementById('user_id');
+    const prioridadInput = document.getElementById('prioridad');
+    const prioridadText = document.getElementById('prioridad_text');
+
+    userSelect.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const prioridad = selectedOption.dataset.prioridad || '';
+        prioridadInput.value = prioridad;
+        prioridadText.textContent = prioridad.charAt(0).toUpperCase() + prioridad.slice(1);
+    });
+</script>
 @endsection

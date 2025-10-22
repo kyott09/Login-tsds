@@ -23,9 +23,12 @@
             <label class="form-label">Servicio</label>
             <select name="servicio" class="form-select" required>
                 <option value="">Seleccione un servicio</option>
-                <option value="mantenimiento">Mantenimiento</option>
-                <option value="instalacion">Instalación</option>
-                <option value="reparacion">Reparación</option>
+                <option value="instalacion_wifi">Instalación de Wi-Fi</option>
+                <option value="mantenimiento_redes">Mantenimiento de Redes</option>
+                <option value="configuracion_router">Configuración de Router</option>
+                <option value="extension_cobertura">Extensión de Cobertura Wi-Fi</option>
+                <option value="diagnostico_problemas">Diagnóstico y Reparación</option>
+                <option value="instalacion_camaras">Instalación de Cámaras IP</option>
             </select>
         </div>
 
