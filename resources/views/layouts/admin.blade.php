@@ -189,7 +189,7 @@
             </ul>
           </li>
 
-          @can('ver admin')
+          @can('ver nadie')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user-check"></i>
