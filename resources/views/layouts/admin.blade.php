@@ -136,7 +136,7 @@
               <p>
                 @role('admin')
                   Registrar
-                @else
+                @else('empleado')
                   Ver
                 @endrole
                 <i class="right fas fa-angle-left"></i>
@@ -144,6 +144,20 @@
             </a>
 
             <ul class="nav nav-treeview">
+              @can('solicitar tarea')
+              <li class="nav-item">
+                <a href="{{ route('tareas.solicitar') }}" class="nav-link">
+                  <i class="nav-icon fas fa-tty"></i>
+                  <p>Solicitar Tarea</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="{{ route('tareas.mis_tareas') }}" class="nav-link">
+                  <i class="nav-icon fas fa-inbox"></i>
+                  <p>Mis solicitudes</p>
+                </a>
+              </li>
+              @endcan
               @can('ver vehiculos')
                 <li class="nav-item">
                   <a href="{{ route('vehiculos.index') }}" class="nav-link">
@@ -175,7 +189,7 @@
             </ul>
           </li>
 
-
+          @can('ver admin')
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user-check"></i>
@@ -196,11 +210,12 @@
                 <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                   <i class="far fa-clipboard nav-icon"></i>
                   <p>Tarea</p>
-                </a>
+                </a>  
               </li>
               
             </ul>   
           </li>
+          @endcan
 
           <li class="nav-header">OTROS</li>
           <li class="nav-item">

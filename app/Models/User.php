@@ -10,8 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     protected $fillable = [
         'name',
@@ -22,6 +21,7 @@ class User extends Authenticatable
         'phone',
         'birthdate',
         'address',
+        'prioridad', 
     ];
 
     protected $hidden = [
@@ -31,6 +31,22 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'birthdate' => 'date', // <-- Esto permite usar ->format('Y-m-d') en la vista
+        'birthdate' => 'date',
     ];
+
+    /**
+     * Relación: un usuario puede tener muchas tareas
+     */
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class);
+    }
+
+    /**
+     * Obtiene la prioridad del usuario en formato legible
+     */
+    public function getPrioridadLabelAttribute()
+    {
+        return ucfirst($this->prioridad);
+    }
 }

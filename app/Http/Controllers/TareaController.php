@@ -29,17 +29,29 @@ class TareaController extends Controller
 
     public function store(StoreTareaRequest $request)
     {
+        $user = auth()->user();
+
         $tarea = new Tarea();
-        $tarea->user_id = $request->input('user_id');
-        $tarea->fecha_creacion = $request->input('fecha_creacion');
+        $tarea->user_id = $user->id;
+        $tarea->fecha_creacion = now();
         $tarea->servicio = $request->input('servicio');
-        $tarea->prioridad = $request->input('prioridad');
+        $tarea->prioridad = $user->prioridad; // prioridad del usuario
         $tarea->descripcion = $request->input('descripcion');
-        $tarea->estado = $request->input('estado');
+        $tarea->estado = 'En proceso'; // por defecto
         $tarea->save();
 
-        return redirect()->route('tareas.index')->with('success', 'Tarea creada exitosamente.');
+        //  Redirección según rol
+        if ($user->hasRole('cliente') || $user->hasRole('premium')) {
+            return redirect()->route('tareas.mis_tareas')
+                            ->with('success', 'Tarea solicitada correctamente.');
+        } else {
+            // Empleado o admin
+            return redirect()->route('tareas.index')
+                            ->with('success', 'Tarea registrada correctamente.');
+        }
     }
+
+
 
     public function show(Tarea $tarea)
     {
@@ -91,4 +103,15 @@ class TareaController extends Controller
         $pdf = \PDF::loadView('tareas.pdf', compact('tareas'));
         return $pdf->download('tareas.pdf');
     }
+
+        // Listado de tareas solo del cliente logueado
+    public function misTareas()
+    {
+        $user = auth()->user();
+        $tareas = Tarea::where('user_id', $user->id)->orderBy('fecha_creacion', 'desc')->get();
+
+        return view('tareas.mis_tareas', compact('tareas'));
+    }
+
 }
+

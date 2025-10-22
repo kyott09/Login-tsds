@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->date('birthdate')->nullable();
             $table->string('address')->nullable();
+
+            // 🔹 Campo prioridad
+            $table->enum('prioridad', ['basico', 'premium'])->default('basico');
+
             $table->rememberToken();
             $table->timestamps();
         });

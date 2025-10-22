@@ -34,6 +34,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'crear foto']);   
         Permission::create(['name' => 'borrar foto']);
         Permission::create(['name' => 'ABM_EMPLEADOS']);
+        Permission::create(['name' => 'solicitar tarea']);
 
         // crear roles
         $admin = Role::create(['name' => 'admin']);
@@ -50,6 +51,6 @@ class RoleSeeder extends Seeder
             'ver vehiculos','ver user','ver tarea','ver empleado'
         ]);
         // asignar permisos al rol cliente
-        $cliente->givePermissionTo(['ver user']);
+        $cliente->givePermissionTo(['ver user', 'solicitar tarea', 'crear tarea']);
     }
 }

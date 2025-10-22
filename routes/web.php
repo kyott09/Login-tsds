@@ -133,3 +133,18 @@ Route::resource('gallery', App\Http\Controllers\GalleryController::class);
 
 
 Route::resource('gallery', GalleryController::class);
+
+Route::middleware(['auth', 'role:cliente|premium'])->group(function () {
+    Route::get('/tareas/solicitar', function () {
+        return view('tareas.solicitar');
+    })->name('tareas.solicitar');
+
+    Route::post('/tareas/solicitar', [TareaController::class, 'store'])
+        ->name('tareas.solicitar.store');
+});
+
+// Listado de tareas de un cliente logueado
+Route::middleware(['auth', 'role:cliente|premium'])->group(function () {
+    Route::get('/tareas/mis-tareas', [TareaController::class, 'misTareas'])
+        ->name('tareas.mis_tareas');
+});
