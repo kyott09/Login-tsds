@@ -16,8 +16,9 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Prioridad</th>
                 <th>Fecha de creación</th>
             </tr>
         </thead>
@@ -26,7 +27,8 @@
             <tr>
                 <td>{{ $tarea->id }}</td>
                 <td>{{ $tarea->nombre }}</td>
-                <td>{{ $tarea->descripcion }}</td>
+                <td>{{ $tarea->servicio }}</td>
+                <td>{{ $tarea->prioridad }}</td>
                 <td>{{ $tarea->created_at }}</td>
             </tr>
             @endforeach

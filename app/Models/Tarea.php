@@ -8,6 +8,7 @@ class Tarea extends Model
 {
     protected $fillable = [
         'user_id',         // ID del usuario/cliente
+        'nombre',          // Nombre del cliente
         'fecha_creacion',  // Fecha de creación
         'servicio',        // Servicio elegido
         'prioridad',       // Premium o Básico

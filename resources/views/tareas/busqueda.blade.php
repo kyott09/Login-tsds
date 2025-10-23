@@ -10,7 +10,6 @@
         </div>
     </div>
     <form action="{{ route('tareas.busqueda') }}" method="GET" class="mb-4">
-        {{-- Puedes agregar aquí filtros adicionales si lo necesitas --}}
     </form>
 
     @if(isset($tareas) && count($tareas) > 0)

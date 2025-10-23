@@ -31,6 +31,7 @@ class TareaSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             Tarea::create([
                 'user_id'        => $users->random()->id,
+                'nombre'         => $users->random()->name,
                 'fecha_creacion' => Carbon::now()->subDays(rand(0, 10))->format('Y-m-d'),
                 'servicio'       => $servicios[array_rand($servicios)],
                 'prioridad'      => $prioridades[array_rand($prioridades)],

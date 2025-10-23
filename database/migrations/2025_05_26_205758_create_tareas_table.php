@@ -14,6 +14,9 @@ class CreateTareasTable extends Migration
             // Relación con users
             $table->unsignedBigInteger('user_id');
 
+            // Nombre del usuario (opcional, solo si quieres guardar copia del nombre)
+            $table->string('nombre')->nullable();
+
             // Fecha de creación de la tarea
             $table->date('fecha_creacion')->nullable();
 
@@ -29,7 +32,6 @@ class CreateTareasTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
     }
 
     public function down()
