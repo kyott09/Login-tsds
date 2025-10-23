@@ -222,7 +222,7 @@
             <a href="{{ route('calendar')}}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
-                Calendar
+                Calendario
                 <span class="badge badge-info right"></span>
               </p>
             </a>
@@ -231,7 +231,7 @@
             <a href="{{ route('gallery.index')}}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
-                Galeria de Fotos
+                Galería de Fotos
               </p>
             </a>
           </li>
