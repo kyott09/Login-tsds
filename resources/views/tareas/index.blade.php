@@ -20,7 +20,6 @@
     <table class="table table-bordered" id="tablaDetalle">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Cliente</th>
                 <th>Servicio</th>
                 <th>Prioridad</th>
@@ -29,14 +28,6 @@
                 <th>Acciones</th>
             </tr>
             <tr>
-                <th>
-                    <select class="form-control form-control-sm filtro-columna">
-                        <option value="">Todos</option>
-                        @foreach($tareas->pluck('id')->unique() as $id)
-                            <option value="{{ $id }}">{{ $id }}</option>
-                        @endforeach
-                    </select>
-                </th>
                 <th>
                     <select class="form-control form-control-sm filtro-columna">
                         <option value="">Todos</option>
@@ -87,8 +78,6 @@
         <tbody>
             @foreach($tareas as $tarea)
                 <tr>
-                    <td>{{ $tarea->id }}</td>
-
                     {{-- Cliente --}}
                     <td>
                         @if($tarea->user)
@@ -128,14 +117,14 @@
 
                             {{-- Botón Editar --}}
                             @can('editar tarea')
-                            <button type="button"
-                                class="btn btn-warning btn-sm editBtn"
+                            <button class="btn btn-warning editBtn"
                                 data-id="{{ $tarea->id }}"
                                 data-cliente_id="{{ $tarea->user_id }}"
                                 data-servicio="{{ $tarea->servicio }}"
                                 data-prioridad="{{ $tarea->prioridad }}"
                                 data-fecha_raw="{{ $tarea->fecha_creacion }}"
-                                data-estado="{{ $tarea->estado }}">
+                                data-estado="{{ $tarea->estado }}"
+                                data-descripcion="{{ $tarea->descripcion }}">
                                 Editar
                             </button>
                             @endcan
@@ -178,14 +167,17 @@ $(document).ready(function() {
     // Modal Editar
     $('.editBtn').on('click', function() {
         let id = $(this).data('id');
+
         $('#editForm').attr('action', '/tareas/' + id);
         $('#editCliente').val($(this).data('cliente_id'));
         $('#editServicio').val($(this).data('servicio'));
         $('#editPrioridad').val($(this).data('prioridad'));
         $('#editFecha').val($(this).data('fecha_raw'));
         $('#editEstado').val($(this).data('estado'));
+        $('#editDescripcion').val($(this).data('descripcion')); // agregado
         $('#editModal').modal('show');
     });
+
 
     // Modal Eliminar
     $('.deleteBtn').on('click', function() {

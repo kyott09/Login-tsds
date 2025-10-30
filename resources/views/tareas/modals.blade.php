@@ -11,41 +11,55 @@
                 </div>
                 <div class="modal-body">
 
+                    {{-- Cliente --}}
                     <div class="mb-3">
                         <label for="editCliente">Cliente</label>
-                        <select name="user_id" id="editCliente" class="form-control">
-                            @foreach($usuarios as $usuario)
-                                <option value="{{ $usuario->id }}">{{ $usuario->name }} ({{ $usuario->email }})</option>
+                        <select name="user_id" id="editCliente" class="form-control" required>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                             @endforeach
                         </select>
                     </div>
 
+                    {{-- Fecha de creación --}}
                     <div class="mb-3">
-                        <label for="editServicio">Servicio</label>
-                        <input type="text" name="servicio" id="editServicio" class="form-control" required>
+                        <label for="editFecha">Fecha de creación</label>
+                        <input type="date" name="fecha_creacion" id="editFecha" class="form-control" required>
                     </div>
 
+                    {{-- Servicio --}}
                     <div class="mb-3">
-                        <label for="editPrioridad">Prioridad</label>
-                        <select name="prioridad" id="editPrioridad" class="form-control">
-                            <option value="baja">Baja</option>
-                            <option value="media">Media</option>
-                            <option value="alta">Alta</option>
+                        <label for="editServicio">Servicio</label>
+                        <select name="servicio" id="editServicio" class="form-control" required>
+                            @foreach(['instalacion_wifi', 'mantenimiento_redes', 'configuracion_router', 'extension_cobertura', 'diagnostico_problemas', 'instalacion_camaras'] as $servicio)
+                                <option value="{{ $servicio }}">{{ ucfirst(str_replace('_',' ',$servicio)) }}</option>
+                            @endforeach
                         </select>
                     </div>
 
+                    {{-- Prioridad --}}
                     <div class="mb-3">
-                        <label for="editFecha">Fecha</label>
-                        <input type="date" name="fecha_creacion" id="editFecha" class="form-control">
+                        <label for="editPrioridad">Prioridad</label>
+                        <select name="prioridad" id="editPrioridad" class="form-control" required>
+                            @foreach(['premium', 'basico'] as $prioridad)
+                                <option value="{{ $prioridad }}">{{ ucfirst($prioridad) }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
+                    {{-- Descripción --}}
+                    <div class="mb-3">
+                        <label for="editDescripcion">Descripción</label>
+                        <textarea name="descripcion" id="editDescripcion" class="form-control" required></textarea>
+                    </div>
+
+                    {{-- Estado --}}
                     <div class="mb-3">
                         <label for="editEstado">Estado</label>
-                        <select name="estado" id="editEstado" class="form-control">
-                            <option value="pendiente">Pendiente</option>
-                            <option value="en_progreso">En progreso</option>
-                            <option value="completada">Completada</option>
-                            <option value="cancelada">Cancelada</option>
+                        <select name="estado" id="editEstado" class="form-control" required>
+                            @foreach(['vista', 'en proceso', 'terminada', 'no terminada'] as $estado)
+                                <option value="{{ $estado }}">{{ ucfirst($estado) }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -58,6 +72,7 @@
         </form>
     </div>
 </div>
+
 
 {{-- Modal Eliminar Tarea --}}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">

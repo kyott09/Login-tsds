@@ -14,9 +14,10 @@ class TareaController extends Controller
     public function index()
     {
         $tareas = Tarea::with('user')->get();
-        $usuarios = User::role('cliente')->orderBy('name')->get();
-        return view('tareas.index', compact('tareas','usuarios'));
+        $users = User::all(); // <- esto es necesario
+        return view('tareas.index', compact('tareas', 'users'));
     }
+
 
     public function create()
     {
