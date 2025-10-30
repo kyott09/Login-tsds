@@ -22,28 +22,35 @@
         <table class="table table-bordered table-striped" id="tablaEmpleados">  <!-- Agregué table-striped para filas alternas -->
             <thead class="table-dark">  <!-- Encabezado oscuro para mejor contraste -->
                 <tr>
-                    <th>ID</th>
                     <th>Empleados</th>
                     <th>Vehículo</th>
+                    @can ('dato especifico empleado')
                     <th>Ingreso</th>
+                    @endcan
                     <th>Estado</th>
                     <th style="max-width: 150px;">Skills</th>  <!-- Ancho maximo para Skills -->
+                    @can ('dato especifico empleado')
                     <th>Inicio Licencia</th>
                     <th>Fin Licencia</th>
                     <th>Acciones</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
             @foreach($employees as $e)
                 <tr>
-                    <td>{{ $e->id }}</td>
                     <td>{{ $e->user ? $e->user->id . ' - ' . $e->user->name . ' (' . $e->user->email . ')' : '-' }}</td>
                     <td>{{ $e->vehicle ? $e->vehicle->patente : '-' }}</td>
+                     @can ('dato especifico empleado')
                     <td>{{ optional($e->fecha_ingreso)->format('d-m-Y') }}</td>
+                    @endcan
                     <td>{{ $e->estado_laboral }}</td>
-                    <td>{{ $e->skills ?: 'N/A' }}</td>  <!-- Nueva celda para Skills -->                    
+                    <td>{{ $e->skills ?: 'N/A' }}</td>  <!-- Nueva celda para Skills --> 
+                     @can ('dato especifico empleado')                   
                     <td>{{ optional($e->fecha_inicio_licencia)->format('d-m-Y') ?: '-' }}</td>
                     <td>{{ optional($e->fecha_fin_licencia)->format('d-m-Y') ?: '-' }}</td>
+                    @endcan
+                    @can ('dato especifico empleado')
                     <td>
                         @can('ver empleado')
                         <button class="btn btn-info btn-sm verBtn"
@@ -58,6 +65,7 @@
                             Ver
                         </button>
                         @endcan
+                    @endcan
                         @can('editar empleado')
                         <button class="btn btn-warning btn-sm editBtn"
                             data-id="{{ $e->id }}"
