@@ -31,7 +31,7 @@
             <div class="carousel-inner rounded-lg shadow-lg">
                 @foreach($photos as $index => $photo)
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <img src="{{ asset('storage/'.$photo->image_path) }}" 
+                        <img src="{{ asset('public/img/users_profile/gallery'.$photo->image_path) }}" 
                              class="d-block w-100" 
                              alt="{{ $photo->title }}" 
                              style="height: 500px; object-fit: cover;">

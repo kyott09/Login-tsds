@@ -2,36 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Informe de Vehículos</title>
+    <title>Listado de Vehículos</title>
     <style>
         body {
-            font-family: "DejaVu Sans", sans-serif;
+            font-family: 'DejaVu Sans', Arial, sans-serif;
             font-size: 12px;
             color: #333;
-            margin: 25px;
+            margin: 30px;
         }
 
-        header {
+        h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
         }
 
-        h1 {
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .subtitulo {
-            font-size: 13px;
+        .header-info {
+            text-align: right;
+            font-size: 11px;
             color: #666;
         }
 
         .info-filtros {
-            margin: 10px 0 20px 0;
+            margin: 15px 0 25px 0;
             font-size: 12px;
             border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f8f8f8;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .info-filtros strong {
+            color: #2c3e50;
         }
 
         table {
@@ -41,34 +45,24 @@
         }
 
         th, td {
-            border: 1px solid #999;
-            padding: 6px 8px;
+            border: 1px solid #444;
+            padding: 8px 6px;
             text-align: left;
         }
 
         th {
-            background-color: #eaeaea;
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
             font-weight: bold;
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f8f9fa;
         }
 
         tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            font-size: 11px;
-            color: #666;
-            text-align: right;
-            border-top: 1px solid #ccc;
-            padding-top: 4px;
+            background-color: #e9ecef;
         }
 
         .total {
@@ -76,13 +70,29 @@
             font-weight: bold;
             background-color: #eaeaea;
         }
+
+        .no-data {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            margin-top: 30px;
+            border-top: 1px solid #aaa;
+            padding-top: 8px;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Listado de Vehículos</h1>
-        <p class="subtitulo">Generado el {{ now()->format('d/m/Y H:i') }}</p>
-    </header>
+    <div class="header-info">
+        Fecha de generación: {{ now()->format('d/m/Y H:i') }}
+    </div>
+
+    <h2>Listado de Vehículos</h2>
 
     {{-- Filtros aplicados --}}
     @if(request('desde') || request('hasta') || request('modelo_id'))
@@ -105,48 +115,45 @@
     @endif
 
     {{-- Tabla principal --}}
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Patente</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Color</th>
-                <th>Estado</th>
-                <th>Fecha de Registro</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($vehiculos as $index => $vehiculo)
+    @if($vehiculos->count() > 0)
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $vehiculo->patente }}</td>
-                    <td>{{ $vehiculo->modelo->brand->descripcion ?? 'Sin marca' }}</td>
-                    <td>{{ $vehiculo->modelo->descripcion ?? 'Sin modelo' }}</td>
-                    <td>{{ $vehiculo->color ?? '-' }}</td>
-                    <td>{{ ucfirst($vehiculo->estado) ?? '-' }}</td>
-                    <td>{{ $vehiculo->created_at->format('d/m/Y') }}</td>
+                    <th>#</th>
+                    <th>Patente</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Estado</th>
+                    <th>Fecha de Registro</th>
                 </tr>
-            @empty
+            </thead>
+            <tbody>
+                @foreach($vehiculos as $index => $vehiculo)
+                    <tr>
+                        <td style="text-align:center;">{{ $index + 1 }}</td>
+                        <td style="text-align:center;">{{ $vehiculo->patente }}</td>
+                        <td>{{ $vehiculo->modelo->brand->descripcion ?? 'Sin marca' }}</td>
+                        <td>{{ $vehiculo->modelo->descripcion ?? 'Sin modelo' }}</td>
+                        <td style="text-align:center;">{{ $vehiculo->color ?? '-' }}</td>
+                        <td style="text-align:center;">{{ ucfirst($vehiculo->estado) ?? '-' }}</td>
+                        <td style="text-align:center;">{{ $vehiculo->created_at->format('d/m/Y') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
                 <tr>
-                    <td colspan="7" style="text-align:center;">No se encontraron vehículos para los filtros seleccionados.</td>
+                    <td colspan="6" class="total">Total de vehículos:</td>
+                    <td class="total">{{ $vehiculos->count() }}</td>
                 </tr>
-            @endforelse
-        </tbody>
+            </tfoot>
+        </table>
+    @else
+        <p class="no-data">No se encontraron vehículos para los filtros seleccionados.</p>
+    @endif
 
-        @if($vehiculos->count() > 0)
-        <tfoot>
-            <tr>
-                <td colspan="6" class="total">Total de vehículos:</td>
-                <td class="total">{{ $vehiculos->count() }}</td>
-            </tr>
-        </tfoot>
-        @endif
-    </table>
-
-    <footer>
-        Informe generado automáticamente — {{ config('app.name', 'Sistema de Vehículos') }}
-    </footer>
+    <div class="footer">
+        Plugin SRL — Sistema de Gestión de Vehículos | © {{ date('Y') }}
+    </div>
 </body>
 </html>
