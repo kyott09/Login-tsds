@@ -98,13 +98,13 @@
                                                 data-marca="{{ $vehiculo->modelo && $vehiculo->modelo->brand ? $vehiculo->modelo->brand->descripcion : '-' }}"
                                                 data-color="{{ $vehiculo->color }}"
                                                 data-estado="{{ ucfirst($vehiculo->estado) }}"
-                                                data-fecha="{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}">
+                                                data-fecha="{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y') : 'Sin fecha' }}">
                                                 Ver
                                             </button>
                                         @endcan
 
                                     </td>
-                                    <td>{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y H:i') : 'Sin fecha' }}</td>
+                                    <td>{{ $vehiculo->created_at ? $vehiculo->created_at->format('d/m/Y') : 'Sin fecha' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

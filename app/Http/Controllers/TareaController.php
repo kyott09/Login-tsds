@@ -14,10 +14,9 @@ class TareaController extends Controller
     public function index()
     {
         $tareas = Tarea::with('user')->get();
-        $users = User::all(); // <- esto es necesario
+        $users = User::all();
         return view('tareas.index', compact('tareas', 'users'));
     }
-
 
     public function create()
     {
@@ -30,6 +29,18 @@ class TareaController extends Controller
     {
         $user = auth()->user();
 
+        $tareaExistente = Tarea::where('user_id', $request->input('user_id'))
+            ->where('servicio', $request->input('servicio'))
+            ->where('estado', '!=', 'Terminada')
+            ->first();
+        
+        if ($tareaExistente) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Ya tienes una solicitud activa para este servicio. 
+                                 Espera a que se marque como "Terminada" antes de solicitar otra.');
+        }
+
         $tarea = new Tarea();
         $tarea->user_id = $request->input('user_id');
         $tarea->fecha_creacion = $request->input('fecha_creacion') ?? now();
@@ -40,7 +51,7 @@ class TareaController extends Controller
         $tarea->save();
 
         if ($user->hasRole('cliente') || $user->hasRole('premium')) {
-            return redirect()->route('tareas.misTareas')
+            return redirect()->route('tareas.mis_tareas')
                              ->with('success', 'Tarea solicitada correctamente.');
         } else {
             return redirect()->route('tareas.index')
@@ -51,7 +62,7 @@ class TareaController extends Controller
     public function edit(Tarea $tarea)
     {
         $usuarios = User::role('cliente')->orderBy('name')->get();
-        return view('tareas.edit', compact('tarea','usuarios'));
+        return view('tareas.edit', compact('tarea', 'usuarios'));
     }
 
     public function update(UpdateTareaRequest $request, Tarea $tarea)
@@ -84,7 +95,7 @@ class TareaController extends Controller
 
         $usuarios = User::role('cliente')->orderBy('name')->get();
 
-        return view('tareas.busqueda', compact('tareas','query','usuarios'));
+        return view('tareas.busqueda', compact('tareas', 'query', 'usuarios'));
     }
 
     public function pdf()
@@ -97,7 +108,9 @@ class TareaController extends Controller
     public function misTareas()
     {
         $user = auth()->user();
-        $tareas = Tarea::where('user_id', $user->id)->orderBy('fecha_creacion', 'desc')->get();
+        $tareas = Tarea::where('user_id', $user->id)
+            ->orderBy('fecha_creacion', 'desc')
+            ->get();
 
         return view('tareas.mis_tareas', compact('tareas'));
     }

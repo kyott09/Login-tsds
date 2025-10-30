@@ -98,9 +98,21 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $data = $request->validated();
+
+        // 🔹 Actualizar los datos del empleado
         $employee->update($data);
-        return redirect()->route('employees.index')->with('success','Empleado actualizado correctamente.');
+
+        // 🔹 Si viene un nombre en el request, actualizamos el usuario asociado
+        if ($request->filled('name') && $employee->user) {
+            $employee->user->update([
+                'name' => $request->input('name'),
+            ]);
+        }
+
+        return redirect()->route('employees.index')
+            ->with('success', 'Empleado actualizado correctamente.');
     }
+
 
     public function destroy(Employee $employee)
     {

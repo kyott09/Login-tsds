@@ -186,8 +186,16 @@
                 </a>
               </li>
               @endcan
+              @can ('modificar roles')
+              <li class="nav-item">
+                <a href="{{ route('roles.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-lock"></i>
+                  <p>Roles</p>
+                </a>
+              </li>
             </ul>
           </li>
+          @endcan
 
           @can('ver nadie')
           <li class="nav-item">
@@ -212,7 +220,6 @@
                   <p>Tarea</p>
                 </a>  
               </li>
-              
             </ul>   
           </li>
           @endcan

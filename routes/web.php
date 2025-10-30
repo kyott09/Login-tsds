@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\RoleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -147,4 +149,10 @@ Route::middleware(['auth', 'role:cliente|premium'])->group(function () {
 Route::middleware(['auth', 'role:cliente|premium'])->group(function () {
     Route::get('/tareas/mis-tareas', [TareaController::class, 'misTareas'])
         ->name('tareas.mis_tareas');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
 });

@@ -24,7 +24,6 @@
     </div>
 </div>
 
-// {{-- Modal Editar --}}
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <form id="editForm" method="POST">
@@ -35,30 +34,35 @@
                     <h5 class="modal-title">Editar Empleado</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="editUsuario" class="form-label">Usuario</label>
-                        <select name="user_id" id="editUsuario" class="form-control">
-                            <option value="">-- Ninguno --</option>
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }} ({{ $user->email }})</option>
-                            @endforeach
-                        </select>
-                        @error('user_id')<div class="text-danger">{{ $message }}</div>@enderror
+                        <label for="editUsuario" class="form-label">Nombre de usuario</label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            id="editUsuario" 
+                            class="form-control" 
+                            value="" 
+                            placeholder="Ingrese el nombre del usuario">
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="editVehicle" class="form-label">Vehículo</label>
                         <select name="vehicle_id" id="editVehicle" class="form-control">
                             <option value="">-- Ninguno --</option>
-                            @foreach($vehicles as $vehicle)  <!-- Cambiado: ahora itera sobre objetos $vehicle -->
-                                <option value="{{ $vehicle->id }}" {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>{{ $vehicle->patente }}</option>  <!-- Muestra patente legible -->
+                            @foreach($vehicles as $vehicle)
+                                <option value="{{ $vehicle->id }}" {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>
+                                    {{ $vehicle->patente }}
+                                </option>
                             @endforeach
                         </select>
                         @error('vehicle_id')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
 
-                    <!-- Resto de los campos igual -->
                     <div class="mb-3">
                         <label for="editFecha" class="form-label">Fecha Ingreso</label>
                         <input type="date" name="fecha_ingreso" id="editFecha" class="form-control" value="{{ old('fecha_ingreso') }}">
@@ -94,6 +98,7 @@
                         @error('fecha_fin_licencia')<div class="text-danger">{{ $message }}</div>@enderror
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-warning">Guardar cambios</button>
@@ -102,6 +107,7 @@
         </form>
     </div>
 </div>
+
 
 {{-- Modal Eliminar --}}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">

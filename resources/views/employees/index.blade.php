@@ -67,17 +67,22 @@
                         @endcan
                     @endcan
                         @can('editar empleado')
-                        <button class="btn btn-warning btn-sm editBtn"
+                        <button 
+                            type="button" 
+                            class="btn btn-warning btn-sm editBtn"
                             data-id="{{ $e->id }}"
-                            data-usuario="{{ $e->user_id }}"
-                            data-vehicle="{{ $e->vehicle_id }}"
+                            data-usuario="{{ $e->user->name ?? '' }}"
+                            data-vehicle="{{ $e->vehicle_id ?? '' }}"
                             data-fecha="{{ optional($e->fecha_ingreso)->format('Y-m-d') }}"
-                            data-estado="{{ $e->estado_laboral }}"
-                            data-skills="{{ $e->skills }}"
+                            data-estado="{{ $e->estado_laboral ?? '' }}"
+                            data-skills="{{ $e->skills ?? '' }}"
                             data-fecha-inicio-licencia="{{ optional($e->fecha_inicio_licencia)->format('Y-m-d') }}"
-                            data-fecha-fin-licencia="{{ optional($e->fecha_fin_licencia)->format('Y-m-d') }}">
+                            data-fecha-fin-licencia="{{ optional($e->fecha_fin_licencia)->format('Y-m-d') }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal">
                             Editar
                         </button>
+
                         @endcan
                         @can('borrar empleado')
                         <button class="btn btn-danger btn-sm deleteBtn"
