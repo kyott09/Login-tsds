@@ -14,11 +14,12 @@ class CreateTareasTable extends Migration
             // Relación con users
             $table->unsignedBigInteger('user_id');
 
-            // Nombre del usuario (opcional, solo si quieres guardar copia del nombre)
+            // Nombre del usuario (opcional)
             $table->string('nombre')->nullable();
 
-            // Fecha de creación de la tarea
+            // Fechas
             $table->date('fecha_creacion')->nullable();
+            $table->date('fecha_fin')->nullable(); // 👈 nuevo campo
 
             // Servicio y prioridad
             $table->string('servicio');

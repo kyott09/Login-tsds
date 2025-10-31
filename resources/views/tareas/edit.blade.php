@@ -25,6 +25,12 @@
             <label for="fecha_creacion">Fecha de creación</label>
             <input type="date" class="form-control" name="fecha_creacion" value="{{ old('fecha_creacion', $tarea->fecha_creacion) }}" required>
         </div>
+        
+        {{-- Fecha de finalización --}}
+        <div class="form-group mb-3">
+            <label for="fecha_fin">Fecha de finalización</label>
+            <input type="date" class="form-control" name="fecha_fin" value="{{ old('fecha_fin', $tarea->fecha_fin) }}">
+        </div>
 
         {{-- Servicio --}}
         <div class="form-group mb-3">

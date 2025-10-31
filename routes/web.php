@@ -156,3 +156,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
 });
+
+

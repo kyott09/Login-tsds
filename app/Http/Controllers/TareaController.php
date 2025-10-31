@@ -11,6 +11,30 @@ use PDF;
 
 class TareaController extends Controller
 {
+    public function rules()
+    {
+        return [
+            'user_id' => ['required', 'exists:users,id'],
+            'servicio' => ['required', 'string', 'max:255'],
+            'prioridad' => ['required', 'in:premium,basico'],
+            'descripcion' => ['required', 'string'],
+            'estado' => ['required', 'in:vista,en proceso,terminada,no terminada'],
+            'fecha_creacion' => ['nullable', 'date'],
+            'fecha_fin' => ['nullable', 'date'],
+
+            // Validación condicional: si el estado es "terminada", fecha_fin es obligatoria
+            'fecha_fin' => [
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('estado') === 'terminada' && empty($value)) {
+                        $fail('Debés ingresar la fecha de finalización si marcás la tarea como terminada.');
+                    }
+                },
+            ],
+        ];
+    }
+
     public function index()
     {
         $tareas = Tarea::with('user')->get();
@@ -31,52 +55,53 @@ class TareaController extends Controller
 
         $tareaExistente = Tarea::where('user_id', $request->input('user_id'))
             ->where('servicio', $request->input('servicio'))
-            ->where('estado', '!=', 'Terminada')
+            ->where('estado', '!=', 'terminada')
             ->first();
         
         if ($tareaExistente) {
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Ya tienes una solicitud activa para este servicio. 
-                                 Espera a que se marque como "Terminada" antes de solicitar otra.');
+                ->with('error', 'Ya tienes una solicitud activa para este servicio. Espera a que se marque como "Terminada" antes de solicitar otra.');
         }
 
         $tarea = new Tarea();
         $tarea->user_id = $request->input('user_id');
         $tarea->fecha_creacion = $request->input('fecha_creacion') ?? now();
+        $tarea->fecha_fin = $request->input('fecha_fin'); 
         $tarea->servicio = $request->input('servicio');
         $tarea->prioridad = $request->input('prioridad');
         $tarea->descripcion = $request->input('descripcion');
-        $tarea->estado = $request->input('estado') ?? 'En proceso';
+
+        $tarea->estado = $request->input('fecha_fin') ? 'Terminada' : ($request->input('estado') ?? 'en proceso');
+
         $tarea->save();
 
         if ($user->hasRole('cliente') || $user->hasRole('premium')) {
             return redirect()->route('tareas.mis_tareas')
-                             ->with('success', 'Tarea solicitada correctamente.');
+                            ->with('success', 'Tarea solicitada correctamente.');
         } else {
             return redirect()->route('tareas.index')
-                             ->with('success', 'Tarea registrada correctamente.');
+                            ->with('success', 'Tarea registrada correctamente.');
         }
     }
 
-    public function edit(Tarea $tarea)
-    {
-        $usuarios = User::role('cliente')->orderBy('name')->get();
-        return view('tareas.edit', compact('tarea', 'usuarios'));
-    }
 
     public function update(UpdateTareaRequest $request, Tarea $tarea)
     {
         $tarea->user_id = $request->input('user_id');
         $tarea->fecha_creacion = $request->input('fecha_creacion');
+        $tarea->fecha_fin = $request->input('fecha_fin'); 
         $tarea->servicio = $request->input('servicio');
         $tarea->prioridad = $request->input('prioridad');
         $tarea->descripcion = $request->input('descripcion');
-        $tarea->estado = $request->input('estado');
+
+        $tarea->estado = $request->input('fecha_fin') ? 'Terminada' : $request->input('estado');
+
         $tarea->save();
 
         return redirect()->route('tareas.index')->with('success', 'Tarea actualizada exitosamente.');
     }
+
 
     public function destroy(Tarea $tarea)
     {
@@ -114,4 +139,8 @@ class TareaController extends Controller
 
         return view('tareas.mis_tareas', compact('tareas'));
     }
+
 }
+
+
+

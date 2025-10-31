@@ -10,6 +10,7 @@ class Tarea extends Model
         'user_id',         // ID del usuario/cliente
         'nombre',          // Nombre del cliente
         'fecha_creacion',  // Fecha de creación
+        'fecha_fin',       //  nuevo campo
         'servicio',        // Servicio elegido
         'prioridad',       // Premium o Básico
         'descripcion',     // Descripción de la tarea

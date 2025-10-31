@@ -27,6 +27,15 @@
                         <input type="date" name="fecha_creacion" id="editFecha" class="form-control" required>
                     </div>
 
+                    {{-- Fecha de finalización --}}
+                    <div class="mb-3">
+                        <label for="editFechaFin">Fecha de finalización</label>
+                        <input type="date" name="fecha_fin" id="editFechaFin" class="form-control">
+                        @error('fecha_fin')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Servicio --}}
                     <div class="mb-3">
                         <label for="editServicio">Servicio</label>
@@ -73,7 +82,6 @@
     </div>
 </div>
 
-
 {{-- Modal Eliminar Tarea --}}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -110,7 +118,8 @@
                 <p><strong>Cliente:</strong> <span id="verCliente"></span></p>
                 <p><strong>Servicio:</strong> <span id="verServicio"></span></p>
                 <p><strong>Prioridad:</strong> <span id="verPrioridad"></span></p>
-                <p><strong>Fecha:</strong> <span id="verFecha"></span></p>
+                <p><strong>Fecha de creacion:</strong> <span id="verFecha"></span></p>
+                <p><strong>Fecha de Finalización:</strong> <span id="verFechaFin"></span></p>
                 <p><strong>Estado:</strong> <span id="verEstado"></span></p>
             </div>
             <div class="modal-footer">

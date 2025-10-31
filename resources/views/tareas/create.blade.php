@@ -50,7 +50,14 @@
                             <input type="date" class="form-control" id="fecha_creacion" name="fecha_creacion" 
                                    value="{{ old('fecha_creacion', date('Y-m-d')) }}" required>
                         </div>
-
+                        
+                        <!-- Fecha de Finalización -->
+                        <div class="form-group mb-3">
+                            <label for="fecha_fin">Fecha de Finalización</label>
+                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" 
+                                   value="{{ old('fecha_fin') }}">
+                        </div>
+                        
                         <!-- Descripción de la tarea -->
                         <div class="form-group mb-3">
                             <label for="descripcion">Descripción de la Tarea</label>

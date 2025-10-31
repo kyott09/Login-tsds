@@ -8,6 +8,11 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    @error('fecha_fin')
+    <div class="text-danger">{{ $message }}</div>
+    @enderror
+
+
     <div class="mb-3">
         <div class="btn-group" role="group" aria-label="Acciones">
             <a href="{{ route('tareas.pdf') }}" class="btn btn-danger">Exportar PDF</a>
@@ -23,7 +28,8 @@
                 <th>Cliente</th>
                 <th>Servicio</th>
                 <th>Prioridad</th>
-                <th>Fecha</th>
+                <th>Fecha de creacion</th>
+                <th>Fecha de Finalizacion</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -67,6 +73,16 @@
                 <th>
                     <select class="form-control form-control-sm filtro-columna">
                         <option value="">Todos</option>
+                        @foreach($tareas->pluck('fecha_fin')->unique() as $fecha_fin)
+                            <option value="{{ $fecha_fin ? \Carbon\Carbon::parse($fecha_fin)->format('d/m/Y') : '—' }}">
+                                {{ $fecha_fin ? \Carbon\Carbon::parse($fecha_fin)->format('d/m/Y') : '—' }}
+                            </option>
+                        @endforeach
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control form-control-sm filtro-columna">
+                        <option value="">Todos</option>
                         @foreach($tareas->pluck('estado')->unique() as $estado)
                             <option value="{{ ucfirst($estado) }}">{{ ucfirst($estado) }}</option>
                         @endforeach
@@ -95,6 +111,9 @@
 
                     {{-- Fecha --}}
                     <td>{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}</td>
+                    
+                    {{-- Fecha de Finalizacion --}}
+                    <td>{{ $tarea->fecha_fin ? \Carbon\Carbon::parse($tarea->fecha_fin)->format('d/m/Y') : '—' }}</td>
 
                     {{-- Estado --}}
                     <td>{{ ucfirst($tarea->estado) }}</td>
@@ -111,6 +130,7 @@
                                 data-servicio="{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}"
                                 data-prioridad="{{ ucfirst($tarea->prioridad) }}"
                                 data-fecha="{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}"
+                                data-fecha="{{ $tarea->fecha_fin ? \Carbon\Carbon::parse($tarea->fecha_fin)->format('d/m/Y') : '—' }}"
                                 data-estado="{{ ucfirst($tarea->estado) }}">
                                 Ver
                             </button>
@@ -123,6 +143,7 @@
                                 data-servicio="{{ $tarea->servicio }}"
                                 data-prioridad="{{ $tarea->prioridad }}"
                                 data-fecha_raw="{{ $tarea->fecha_creacion }}"
+                                data-fecha_fin="{{ $tarea->fecha_fin }}"
                                 data-estado="{{ $tarea->estado }}"
                                 data-descripcion="{{ $tarea->descripcion }}">
                                 Editar
@@ -160,6 +181,7 @@ $(document).ready(function() {
         $('#verServicio').text($(this).data('servicio'));
         $('#verPrioridad').text($(this).data('prioridad'));
         $('#verFecha').text($(this).data('fecha'));
+        $('#verFechaFin').text($(this).data('fecha_fin'));
         $('#verEstado').text($(this).data('estado'));
         $('#verModal').modal('show');
     });
@@ -173,10 +195,13 @@ $(document).ready(function() {
         $('#editServicio').val($(this).data('servicio'));
         $('#editPrioridad').val($(this).data('prioridad'));
         $('#editFecha').val($(this).data('fecha_raw'));
+        $('#editFechaFin').val($(this).data('fecha_fin') || '');
         $('#editEstado').val($(this).data('estado'));
-        $('#editDescripcion').val($(this).data('descripcion')); // agregado
+        $('#editDescripcion').val($(this).data('descripcion'));
+        
         $('#editModal').modal('show');
     });
+
 
 
     // Modal Eliminar
