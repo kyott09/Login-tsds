@@ -129,8 +129,8 @@
                                 data-cliente="{{ $tarea->user->name ?? 'Sin cliente' }}"
                                 data-servicio="{{ ucfirst(str_replace('_',' ',$tarea->servicio)) }}"
                                 data-prioridad="{{ ucfirst($tarea->prioridad) }}"
-                                data-fecha="{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}"
-                                data-fecha="{{ $tarea->fecha_fin ? \Carbon\Carbon::parse($tarea->fecha_fin)->format('d/m/Y') : '—' }}"
+                                data-fecha_creacion="{{ \Carbon\Carbon::parse($tarea->fecha_creacion)->format('d/m/Y') }}"
+                                data-fecha_fin="{{ $tarea->fecha_fin ? \Carbon\Carbon::parse($tarea->fecha_fin)->format('d/m/Y') : '—' }}"
                                 data-estado="{{ ucfirst($tarea->estado) }}">
                                 Ver
                             </button>
@@ -180,7 +180,8 @@ $(document).ready(function() {
         $('#verCliente').text($(this).data('cliente'));
         $('#verServicio').text($(this).data('servicio'));
         $('#verPrioridad').text($(this).data('prioridad'));
-        $('#verFecha').text($(this).data('fecha'));
+        // ahora usamos los atributos data-fecha_creacion y data-fecha_fin
+        $('#verFecha').text($(this).data('fecha_creacion'));
         $('#verFechaFin').text($(this).data('fecha_fin'));
         $('#verEstado').text($(this).data('estado'));
         $('#verModal').modal('show');

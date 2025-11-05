@@ -22,13 +22,14 @@ class TareaController extends Controller
             'fecha_creacion' => ['nullable', 'date'],
             'fecha_fin' => ['nullable', 'date'],
 
-            // Validación condicional: si el estado es "terminada", fecha_fin es obligatoria
+            // Validación condicional: si el estado es "terminada" o "no terminada", fecha_fin es obligatoria
             'fecha_fin' => [
                 'nullable',
                 'date',
                 function ($attribute, $value, $fail) {
-                    if ($this->input('estado') === 'terminada' && empty($value)) {
-                        $fail('Debés ingresar la fecha de finalización si marcás la tarea como terminada.');
+                    $estado = strtolower($this->input('estado'));
+                    if (in_array($estado, ['terminada', 'no terminada']) && empty($value)) {
+                        $fail('Debés ingresar la fecha de finalización si marcás la tarea como terminada o no terminada.');
                     }
                 },
             ],
@@ -67,12 +68,22 @@ class TareaController extends Controller
         $tarea = new Tarea();
         $tarea->user_id = $request->input('user_id');
         $tarea->fecha_creacion = $request->input('fecha_creacion') ?? now();
-        $tarea->fecha_fin = $request->input('fecha_fin'); 
         $tarea->servicio = $request->input('servicio');
         $tarea->prioridad = $request->input('prioridad');
         $tarea->descripcion = $request->input('descripcion');
 
-        $tarea->estado = $request->input('fecha_fin') ? 'Terminada' : ($request->input('estado') ?? 'en proceso');
+        // Lógica: terminar/no terminada -> asegurar fecha_fin; en proceso/vista -> quitar fecha_fin; otros -> respetar fecha_fin
+        $estadoInput = strtolower($request->input('estado', 'en proceso'));
+        if (in_array($estadoInput, ['terminada', 'no terminada'])) {
+            $tarea->fecha_fin = $request->input('fecha_fin') ? $request->input('fecha_fin') : now();
+            $tarea->estado = $estadoInput; // 'terminada' o 'no terminada'
+        } elseif (in_array($estadoInput, ['en proceso', 'vista'])) {
+            $tarea->fecha_fin = null;
+            $tarea->estado = $estadoInput; // 'en proceso' o 'vista'
+        } else {
+            $tarea->fecha_fin = $request->input('fecha_fin');
+            $tarea->estado = $estadoInput;
+        }
 
         $tarea->save();
 
@@ -90,12 +101,22 @@ class TareaController extends Controller
     {
         $tarea->user_id = $request->input('user_id');
         $tarea->fecha_creacion = $request->input('fecha_creacion');
-        $tarea->fecha_fin = $request->input('fecha_fin'); 
         $tarea->servicio = $request->input('servicio');
         $tarea->prioridad = $request->input('prioridad');
         $tarea->descripcion = $request->input('descripcion');
 
-        $tarea->estado = $request->input('fecha_fin') ? 'Terminada' : $request->input('estado');
+        // Lógica al actualizar: terminar/no terminada -> asegurar fecha_fin; en proceso/vista -> eliminar fecha_fin; otros -> respetar fecha_fin
+        $estadoInput = strtolower($request->input('estado', $tarea->estado));
+        if (in_array($estadoInput, ['terminada', 'no terminada'])) {
+            $tarea->fecha_fin = $request->input('fecha_fin') ? $request->input('fecha_fin') : now();
+            $tarea->estado = $estadoInput;
+        } elseif (in_array($estadoInput, ['en proceso', 'vista'])) {
+            $tarea->fecha_fin = null;
+            $tarea->estado = $estadoInput;
+        } else {
+            $tarea->fecha_fin = $request->input('fecha_fin');
+            $tarea->estado = $estadoInput;
+        }
 
         $tarea->save();
 
