@@ -11,6 +11,7 @@ use App\Http\Controllers\TareaController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Auth\CustomerLoginController;
 
 
 /*
@@ -80,8 +81,8 @@ Route::middleware(['auth'])->group(function () {
 // ----------------------
 // Rutas Login/Register/Customer
 // ----------------------
-Route::get('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController::class, 'showLoginForm'])->name('logincustomer');
-Route::post('/logincustomer', [App\Http\Controllers\Auth\LoginCustomerController::class, 'login'])->name('logincustomer.submit');
+Route::get('/logincustomer', [CustomerLoginController::class, 'showLoginForm'])->name('logincustomer');
+Route::post('/logincustomer', [CustomerLoginController::class, 'login'])->name('logincustomer.login');
 
 Route::get('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'showRegistrationForm'])->name('registercustomer');
 Route::post('/registercustomer', [App\Http\Controllers\Auth\RegisterCustomerController::class, 'register'])->name('registercustomer.submit');
