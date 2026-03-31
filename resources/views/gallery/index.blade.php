@@ -31,14 +31,13 @@
             <div class="carousel-inner rounded-lg shadow-lg">
                 @foreach($photos as $index => $photo)
                     <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <img src="{{ asset('public/img/users_profile/gallery'.$photo->image_path) }}" 
+                        <img src="{{ asset('storage/'.$photo->image_path) }}" 
                              class="d-block w-100" 
                              alt="{{ $photo->title }}" 
                              style="height: 500px; object-fit: cover;">
                         <div class="carousel-caption d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-50 rounded p-3">
                             <h4>{{ $photo->title }}</h4>
                             <div class="mt-2">
-
                                 <form action="{{ route('gallery.destroy', $photo) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que querés eliminar esta foto?');">
                                     @csrf
                                     @method('DELETE')
@@ -54,7 +53,6 @@
                 @endforeach
             </div>
 
-            <!-- Controles -->
             <a class="carousel-control-prev" href="#photoCarousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Anterior</span>

@@ -10,13 +10,11 @@ class PhotoSeeder extends Seeder
 {
     public function run(): void
     {
-        // Crear el directorio si no existe
         if (!Storage::disk('public')->exists('photos')) {
             Storage::disk('public')->makeDirectory('photos');
         }
 
-        // Rutas de las imágenes locales
-        $sourcePath = public_path('img/users_profile/gallery');
+        $sourcePath = public_path('img/users_profile/gallery/photo');
         $images = [
             ['file' => 'FOTO1.JPEG', 'title' => ''],
             ['file' => 'FOTO2.JPEG', 'title' => ''],
@@ -28,11 +26,9 @@ class PhotoSeeder extends Seeder
             $originalFile = $sourcePath . DIRECTORY_SEPARATOR . $img['file'];
 
             if (file_exists($originalFile)) {
-                // Copiar imagen al storage público
                 $destinationFile = 'photos/' . $img['file'];
                 Storage::disk('public')->put($destinationFile, file_get_contents($originalFile));
 
-                // Crear registro en la base de datos
                 Photo::create([
                     'title' => $img['title'],
                     'image_path' => $destinationFile,
